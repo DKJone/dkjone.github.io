@@ -1,6 +1,7 @@
 /* ==========================================================================
-   Default theme skin
+   Sea theme skin
    ========================================================================== */
+/* Colors */
 /*!
  * Basically Basic Jekyll Theme 1.1.3
  * Copyright 2017 Michael Rose - mademistakes | @mmistakes
@@ -543,12 +544,12 @@ html {
 body {
   display: -ms-flexbox;
   display: flex;
-  background: #fff;
-  color: #222831; }
+  background: #263849;
+  color: #90f6d7; }
 
 blockquote,
 q {
-  color: #7a7e83;
+  color: #bcfae7;
   font-style: italic; }
   blockquote cite,
   q cite {
@@ -662,14 +663,14 @@ figcaption {
   font-size: 80%; }
 
 a {
-  color: #00848a; }
+  color: #35bcbf; }
   a:hover {
-    color: #006368; }
+    color: #288d8f; }
 
 *:focus {
-  border-color: #00848a;
+  border-color: #35bcbf;
   outline: none;
-  box-shadow: 0 0 10px #00848a; }
+  box-shadow: 0 0 10px #35bcbf; }
 
 /* ==========================================================================
    Layout
@@ -686,7 +687,7 @@ a {
   min-height: 100vh;
   transform: translateX(0);
   transition: all 0.4s ease;
-  background-color: #fff;
+  background-color: #263849;
   z-index: 100;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden; }
@@ -777,7 +778,7 @@ main section {
     float: right;
     margin-right: 0; } }
 .layout--cv .entry a {
-  color: #00848a; }
+  color: #35bcbf; }
 .layout--cv .entry address {
   font-style: normal; }
 .layout--cv .entry .title,
@@ -787,7 +788,7 @@ main section {
   margin-bottom: 0; }
 .layout--cv .entry .date {
   margin-bottom: 1rem;
-  color: #7a7e83;
+  color: #bcfae7;
   font-family: Menlo, Consolas, Monaco, "Courier New", Courier, monospace;
   font-size: 80%; }
 .layout--cv .entry .courses-title,
@@ -827,7 +828,7 @@ table {
 
 th,
 td {
-  border-bottom: 1px solid #d7d8da; }
+  border-bottom: 1px solid rgba(144, 246, 215, 0.5); }
 
 th {
   padding: 0.5em;
@@ -874,7 +875,7 @@ th {
     -ms-flex-align: center;
     align-items: center;
     min-height: 50px;
-    color: #222831;
+    color: #90f6d7;
     text-decoration: none; }
 
 .site-logo {
@@ -914,7 +915,7 @@ th {
       opacity: 1; }
     .sidebar li a {
       position: relative;
-      color: #393e46; }
+      color: #41506b; }
       .sidebar li a::before {
         display: block;
         position: absolute;
@@ -923,10 +924,10 @@ th {
         width: 0;
         height: 1px;
         transition: width 0.3s cubic-bezier(0, 0, 0.3, 1);
-        background-color: #393e46;
+        background-color: #41506b;
         content: ''; }
       .sidebar li a:hover {
-        color: #00848a; }
+        color: #35bcbf; }
       .sidebar li a:hover::before {
         width: 2.5rem; }
   .sidebar > .inner {
@@ -961,7 +962,7 @@ th {
       bottom: 0;
       width: 1.5em;
       height: 1px;
-      background-color: #393e46;
+      background-color: #41506b;
       content: ''; }
     .sidebar .menu li {
       margin-bottom: 1.5rem; }
@@ -980,7 +981,7 @@ th {
       margin-bottom: 0.5rem; }
     .sidebar .contact-list a {
       display: block;
-      color: #393e46;
+      color: #41506b;
       text-decoration: none; }
 
 .sidebar-toggle-wrapper {
@@ -1046,20 +1047,20 @@ th {
     display: block;
     padding: 1em;
     border-radius: 0.25em;
-    background-color: #00848a;
+    background-color: #35bcbf;
     color: #fff;
     font-weight: bold;
     text-align: center;
     text-decoration: none; }
     .pager a:hover {
-      background-color: #339da1; }
+      background-color: #5dc9cc; }
 
 /* ==========================================================================
    Footer
    ========================================================================== */
 .site-footer {
   margin-top: 4rem;
-  color: #7a7e83;
+  color: #bcfae7;
   font-size: 80%; }
 
 .copyright {
@@ -1076,13 +1077,13 @@ th {
     clear: both;
     content: ''; }
   .entry:not(:last-child) {
-    border-bottom: 1px solid #d7d8da; }
+    border-bottom: 1px solid rgba(144, 246, 215, 0.5); }
   .entry a {
     color: inherit; }
 
 .entry-title {
   margin-bottom: 0.5rem;
-  color: #595e65;
+  color: #acf8e1;
   line-height: inherit; }
   .entry-title {
     font-size: 18px; }
@@ -1111,7 +1112,7 @@ th {
     margin-left: 1.5rem; }
   .entry-meta .icon {
     margin-right: 0.5em;
-    fill: #00848a; }
+    fill: #35bcbf; }
 
 /*
    Entry list
@@ -1120,7 +1121,7 @@ th {
   word-wrap: break-word;
   /* break long words that could overflow */ }
   .entries .entry-title a:hover {
-    color: #00848a; }
+    color: #35bcbf; }
 .entries .entry-excerpt {
   /* normalize font sizes */
   /* remove space after last child element */ }
@@ -1171,13 +1172,13 @@ th {
 .entry-content h4,
 .entry-content h5,
 .entry-content h6 {
-  color: #595e65; }
+  color: #acf8e1; }
 
 /* Footnotes */
 .footnotes {
   margin: 2rem 0;
   padding-top: 1rem;
-  border-top: 1px solid #d7d8da;
+  border-top: 1px solid rgba(144, 246, 215, 0.5);
   font-size: 80%; }
 
 /* Read more link */
@@ -1194,7 +1195,7 @@ th {
   padding: 0.5em 1em;
   border: 0;
   border-radius: 0.25em;
-  background-color: #00848a;
+  background-color: #35bcbf;
   color: #fff;
   font-weight: bold;
   text-align: center;
@@ -1202,10 +1203,10 @@ th {
   cursor: pointer;
   /* block button fills width of parent container */ }
   .btn:hover {
-    background-color: #339da1;
+    background-color: #5dc9cc;
     color: #fff; }
   .btn:focus {
-    background-color: #006a6e; }
+    background-color: #2a9699; }
   .btn .icon {
     margin-right: 0.5em; }
   .btn--block {
@@ -1287,7 +1288,7 @@ th {
     right: 0;
     bottom: 0;
     left: 0;
-    background-color: rgba(0, 132, 138, 0.25);
+    background-color: rgba(53, 188, 191, 0.25);
     content: ''; }
   .intro-image img {
     width: 100%; }
@@ -1299,7 +1300,7 @@ th {
 
 .intro-title {
   margin-bottom: 1rem;
-  color: #595e65;
+  color: #acf8e1;
   line-height: 1; }
   .intro-title {
     font-size: 26px; }
@@ -1376,7 +1377,7 @@ th {
   height: 0.25em;
   transition-duration: 0.5s;
   border-radius: 1.75em;
-  background: #222831; }
+  background: #90f6d7; }
   .navicon::before, .navicon::after {
     display: block;
     position: absolute;
@@ -1384,7 +1385,7 @@ th {
     height: 0.25em;
     transition-duration: 0.5s 0.25s;
     border-radius: 1.75em;
-    background: #222831;
+    background: #90f6d7;
     content: ''; }
   .navicon::before {
     top: 0.5em; }
@@ -1432,7 +1433,7 @@ th {
    ========================================================================== */
 .highlight {
   padding: 1em;
-  background-color: #f5f5f6;
+  background-color: #fff;
   /* line numbers */
   /*
      Solarized Light
@@ -1535,7 +1536,7 @@ th {
     .highlight table pre {
       margin: 0; }
   .highlight .lineno {
-    color: #9c9fa3; }
+    color: #a0a8b5; }
   .highlight .c {
     color: #93a1a1; }
   .highlight .err {
@@ -1749,7 +1750,7 @@ th {
     padding: 0.75em 1em;
     clip: auto !important;
     border-radius: 0.125em;
-    background-color: #393e46;
+    background-color: #41506b;
     color: #fff;
     font-weight: bold;
     line-height: normal;

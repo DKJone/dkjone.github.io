@@ -1,5 +1,5 @@
 # Theme Skin
-skin: default # default, night, plum, sea, soft, steel
+skin: sea # default, night, plum, sea, soft, steel
 
 # Theme Text
 t:
@@ -8,13 +8,13 @@ t:
   skip_content: "Skip to content"
   skip_footer: "Skip to footer"
   menu: "Menu"
-  home: "Home"
-  newer: "Newer"
-  older: "Older"
+  home: "主页"
+  newer: "前一篇"
+  older: "下一篇"
   email: "Email"
   subscribe: "Subscribe"
   read_more: "Read More"
-  posts: "Posts"
+  posts: "文章列表:"
   page: "Page"
   of: "of"
   min_read: "min read"
@@ -31,4 +31,5 @@ google_fonts:
 
 navigation_pages:
   - about.md
+  - page2.md
   - cv.md

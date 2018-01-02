@@ -1,1 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en-US"><generator uri="https://jekyllrb.com/" version="3.6.2">Jekyll</generator><link href="http://localhost:4000/atom.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="en-US" /><updated>2017-12-29T15:55:32+08:00</updated><id>http://localhost:4000/</id><title type="html">DKJone’s blog</title><author><name>DKJone</name></author></feed>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en-US"><generator uri="https://jekyllrb.com/" version="3.6.2">Jekyll</generator><link href="http://localhost:4000/atom.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="en-US" /><updated>2018-01-02T18:41:32+08:00</updated><id>http://localhost:4000/</id><title type="html">DKJone’s blog</title><author><name>DKJone</name></author><entry><title type="html">微信破解版</title><link href="http://localhost:4000/2018/01/02/wechat-hooked.html" rel="alternate" type="text/html" title="微信破解版" /><published>2018-01-02T00:00:00+08:00</published><updated>2018-01-01T23:27:01+08:00</updated><id>http://localhost:4000/2018/01/02/wechat-hooked</id><content type="html" xml:base="http://localhost:4000/2018/01/02/wechat-hooked.html">&lt;p&gt;1.下载微信APP&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;itms-services://?action=download-manifest&amp;amp;url=https://raw.githubusercontent.com/DKJone/PersonalPage/master/manifest.plist&quot;&gt;
+          &lt;img src=&quot;https://raw.githubusercontent.com/DKJone/PersonalPage/master/57x57.png&quot; style=&quot;width: 18px;height: 18px&quot; /&gt;下载
+&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;2.信任企业证书&lt;/p&gt;
+
+&lt;p&gt;可以通过&lt;code class=&quot;highlighter-rouge&quot;&gt;设置-&amp;gt;通用-&amp;gt;描述文件与设备管理-&amp;gt;JSTI Group -&amp;gt;信任&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;也可以通过下面链接快速信任&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://raw.githubusercontent.com/DKJone/PersonalPage/master/embedded.mobileprovision&quot; class=&quot;btn-install-go&quot; data-stat-pos=&quot;guideTrust&quot;&gt;快速信任&lt;/a&gt;&lt;/p&gt;</content><author><name>DKJone</name></author><category term="红包" /><category term="微信" /><summary type="html">更新为微信6.6.1，添加消息自动回复、自动抢红包、撤回消息拦截、自定义系统消息等功能</summary></entry></feed>
