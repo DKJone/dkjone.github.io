@@ -161,15 +161,16 @@ layout: default
   txtCanvas.width = WIDTH;
   txtCanvas.height = HEIGHT;
 
-  txtCtx.font = 'bold 170px Sans-serif';
+  70
+  txtCtx.font = 'bold '+ (WIDTH/4 < 200 ? WIDTH/4 : 200)+'px Sans-serif';
   txtCtx.textAlign = 'center';
   txtCtx.baseline = 'middle';
-  // txtCtx.fillText('D K J o n e', WIDTH / 2, HEIGHT / 2);
+  txtCtx.fillText('DKJone', WIDTH / 2, HEIGHT / 2);
   // txtCtx.fillText('DKJone ❤  Alice', WIDTH / 2, HEIGHT / 2);
-  console.log(WIDTH);
-  txtCtx.fillText('DKJone', WIDTH / 2 , HEIGHT / 2- 150)
-  txtCtx.fillText('❤', WIDTH / 2, HEIGHT / 2)
-  txtCtx.fillText('A l i c e', WIDTH / 2 , HEIGHT / 2 + 150)
+  // console.log(WIDTH);
+  // txtCtx.fillText('DKJone', WIDTH / 2 , HEIGHT / 2- 150)
+  // txtCtx.fillText('❤', WIDTH / 2, HEIGHT / 2)
+  // txtCtx.fillText('A l i c e', WIDTH / 2 , HEIGHT / 2 + 150)
 
   ctx.font = 'bold 18px Monospace';
   ctx.textAlign = 'center';
