@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<!--
+    Basically Basic Jekyll Theme 1.1.3
+    Copyright 2017 Michael Rose - mademistakes.com | @mmistakes
+    Free for personal and commercial use under the MIT license
+    https://github.com/mmistakes/jekyll-basically-theme/blob/master/LICENSE.md
+-->
+<html lang="en-US" class="no-js">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+    
+    <!-- Begin Jekyll SEO tag v2.4.0 -->
+<title>swift代码优化 | DKJone’s blog</title>
+<meta name="generator" content="Jekyll v3.6.2" />
+<meta property="og:title" content="swift代码优化" />
+<meta name="author" content="DKJone" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="swift代码优化，提高编译速度" />
+<meta property="og:description" content="swift代码优化，提高编译速度" />
+<link rel="canonical" href="http://localhost:4000/2017/10/13/swift%E4%BB%A3%E7%A0%81%E4%BC%98%E5%8C%96.html" />
+<meta property="og:url" content="http://localhost:4000/2017/10/13/swift%E4%BB%A3%E7%A0%81%E4%BC%98%E5%8C%96.html" />
+<meta property="og:site_name" content="DKJone’s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2017-10-13T00:00:00+08:00" />
+<script type="application/ld+json">
+{"description":"swift代码优化，提高编译速度","author":{"@type":"Person","name":"DKJone"},"@type":"BlogPosting","url":"http://localhost:4000/2017/10/13/swift%E4%BB%A3%E7%A0%81%E4%BC%98%E5%8C%96.html","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/images/header70.jpg"},"name":"DKJone"},"headline":"swift代码优化","dateModified":"2017-10-13T23:27:01+08:00","datePublished":"2017-10-13T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2017/10/13/swift%E4%BB%A3%E7%A0%81%E4%BC%98%E5%8C%96.html"},"@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+  
+
+  <script>
+    /* Cut the mustard */
+    if ( 'querySelector' in document && 'addEventListener' in window ) {
+      document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + 'js';
+    }
+  </script>
+
+  <link rel="stylesheet" href="/assets/stylesheets/main.css">
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Sans:400,400i,600,600i">
+  
+
+  
+    
+    <link rel="alternate" type="application/atom+xml" title="DKJone&#39;s blog" href="/atom.xml">
+  
+</head>
+
+
+  <body class="layout--post swift代码优化">
+
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#primary-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+
+    <div class="sidebar-toggle-wrapper">
+      <button class="toggle navicon-button larr" type="button">
+        <span class="toggle-inner">
+          <span class="sidebar-toggle-label">Menu</span>
+          <span class="navicon"></span>
+        </span>
+      </button>
+    </div>
+
+    <div id="sidebar" class="sidebar">
+      <div class="inner">
+        <nav id="nav-primary" class="site-nav" itemscope itemtype="http://schema.org/SiteNavigationElement" aria-label="Main navigation">
+  <ul id="menu-main-navigation" class="menu">
+    <!-- Home link -->
+    <li class="menu-item">
+      <a href="/" itemprop="url">
+        <span itemprop="name">主页</span>
+      </a>
+    </li>
+
+    <!-- site.pages links -->
+    
+    
+
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+  </ul>
+</nav>
+        <ul class="contact-list">
+  
+    <li>
+      <a href="mailto:1136165636@qq.com">
+        <span class="icon icon--email"><svg xmlns="http://www.w3.org/2000/svg" viewBox="313.1 3.7 16 16"><path d="M318.5 8.9c0-.2.2-.4.4-.4h4.5c.2 0 .4.2.4.4s-.2.4-.4.4h-4.5c-.3 0-.4-.2-.4-.4zm.4 2.1h4.5c.2 0 .4-.2.4-.4s-.2-.4-.4-.4h-4.5c-.2 0-.4.2-.4.4s.1.4.4.4zm3.5 1.2c0-.2-.2-.4-.4-.4h-3.1c-.2 0-.4.2-.4.4s.2.4.4.4h3.1c.2.1.4-.1.4-.4zm-1.5-8.4l-1.7 1.4c-.2.1-.2.4 0 .6s.4.2.6 0l1.4-1.2 1.4 1.2c.2.1.4.1.6 0s.1-.4 0-.6l-1.7-1.4c-.3-.1-.5-.1-.6 0zm7.8 6.2c.1.1.1.2.1.3v7.9c0 .8-.7 1.5-1.5 1.5h-12.5c-.8 0-1.5-.7-1.5-1.5v-7.9c0-.1.1-.2.1-.3l1.6-1.3c.2-.1.4-.1.6 0s.1.4 0 .6l-1.2 1 1.8 1.3v-4c0-.6.5-1.1 1.1-1.1h7.5c.6 0 1.1.5 1.1 1.1v4l1.8-1.3-1.2-1c-.2-.1-.2-.4 0-.6s.4-.2.6 0l1.6 1.3zm-11.6 2.2l4 2.8 4-2.8V7.6c0-.1-.1-.2-.2-.2h-7.5c-.1 0-.2.1-.2.2v4.6zm10.9-1l-4.7 3.4 3.4 2.6c.2.1.2.4.1.6-.1.2-.4.2-.6.1l-3.6-2.8-1.2.8c-.1.1-.3.1-.5 0l-1.2-.8-3.6 2.8c-.2.1-.4.1-.6-.1-.1-.2-.1-.4.1-.6l3.4-2.6-4.7-3.4v7.1c0 .4.3.6.6.6h12.5c.4 0 .6-.3.6-.6v-7.1z"/></svg></span>
+        <span class="label">Email</span>
+      </a>
+    </li>
+  
+
+  
+    <li><a href="https://github.com/DKJone">
+  <span class="icon icon--github"><svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="1.414"><path d="M8 0C3.58 0 0 3.582 0 8c0 3.535 2.292 6.533 5.47 7.59.4.075.547-.172.547-.385 0-.19-.007-.693-.01-1.36-2.226.483-2.695-1.073-2.695-1.073-.364-.924-.89-1.17-.89-1.17-.725-.496.056-.486.056-.486.803.056 1.225.824 1.225.824.714 1.223 1.873.87 2.33.665.072-.517.278-.87.507-1.07-1.777-.2-3.644-.888-3.644-3.953 0-.873.31-1.587.823-2.147-.09-.202-.36-1.015.07-2.117 0 0 .67-.215 2.2.82.64-.178 1.32-.266 2-.27.68.004 1.36.092 2 .27 1.52-1.035 2.19-.82 2.19-.82.43 1.102.16 1.915.08 2.117.51.56.82 1.274.82 2.147 0 3.073-1.87 3.75-3.65 3.947.28.24.54.73.54 1.48 0 1.07-.01 1.93-.01 2.19 0 .21.14.46.55.38C13.71 14.53 16 11.53 16 8c0-4.418-3.582-8-8-8"/></svg></span>
+  <span class="label">GitHub</span>
+</a>
+</li>
+  
+
+  
+    <li><a href="https://twitter.com/jone_dk">
+  <span class="icon icon--twitter"><svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="1.414"><path d="M16 3.038c-.59.26-1.22.437-1.885.517.677-.407 1.198-1.05 1.443-1.816-.634.37-1.337.64-2.085.79-.598-.64-1.45-1.04-2.396-1.04-1.812 0-3.282 1.47-3.282 3.28 0 .26.03.51.085.75-2.728-.13-5.147-1.44-6.766-3.42C.83 2.58.67 3.14.67 3.75c0 1.14.58 2.143 1.46 2.732-.538-.017-1.045-.165-1.487-.41v.04c0 1.59 1.13 2.918 2.633 3.22-.276.074-.566.114-.865.114-.21 0-.41-.02-.61-.058.42 1.304 1.63 2.253 3.07 2.28-1.12.88-2.54 1.404-4.07 1.404-.26 0-.52-.015-.78-.045 1.46.93 3.18 1.474 5.04 1.474 6.04 0 9.34-5 9.34-9.33 0-.14 0-.28-.01-.42.64-.46 1.2-1.04 1.64-1.7z" fill-rule="nonzero"/></svg></span>
+  <span class="label">Twitter</span>
+</a>
+</li>
+  
+
+  <li>
+    
+      <a href="/atom.xml" title="Atom Feed">
+        <span class="icon icon--rss"><svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="1.414"><path d="M12.8 16C12.8 8.978 7.022 3.2 0 3.2V0c8.777 0 16 7.223 16 16h-3.2zM2.194 11.61c1.21 0 2.195.985 2.195 2.196 0 1.21-.99 2.194-2.2 2.194C.98 16 0 15.017 0 13.806c0-1.21.983-2.195 2.194-2.195zM10.606 16h-3.11c0-4.113-3.383-7.497-7.496-7.497v-3.11c5.818 0 10.606 4.79 10.606 10.607z"/></svg></span>
+        <span class="label">Subscribe</span>
+      </a>
+    
+  </li>
+</ul>
+
+      </div>
+    </div>
+
+    <div class="canvas">
+      <div class="wrapper">
+        
+
+<header id="masthead">
+  <div class="inner">
+    <div class="title-area">
+      
+        <p class="site-title">
+          <a href="/">
+            <img src="/assets/images/header70.jpg" alt="" class="site-logo">
+            <span>DKJone&#39;s blog</span>
+          </a>
+        </p>
+      
+    </div>
+  </div>
+</header>
+
+        <header class="intro">
+  
+
+  <div class="inner">
+    <div class="intro-text">
+      <h1 class="intro-title">swift代码优化
+</h1>
+      
+
+      
+        
+
+        <p class="entry-meta">
+          <span class="byline-item">by DKJone</span><span class="byline-item"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="379 72 16 16"><g><g><path fill="none" d="M380.8,86.7h12.3v-8.8h-12.3V86.7z M389.5,78.8h1.7v1.4h-1.7V78.8z M389.5,81.3h1.7v1.4h-1.7V81.3z M389.5,83.8h1.7v1.4h-1.7V83.8z M386.1,78.8h1.7v1.4h-1.7V78.8z M386.1,81.3h1.7v1.4h-1.7V81.3z M386.1,83.8h1.7v1.4h-1.7V83.8z M382.8,78.8h1.7v1.4h-1.7V78.8z M382.8,81.3h1.7v1.4h-1.7V81.3z M382.8,83.8h1.7v1.4h-1.7V83.8z"/><polygon fill="none" points="384.7 75.1 383.4 75.1 383.4 74.3 380.8 74.3 380.8 76.6 393.2 76.6 393.2 74.3 390.6 74.3 390.6 75.1 389.3 75.1 389.3 74.3 384.7 74.3"/><rect x="382.8" y="78.8" width="1.7" height="1.4"/><rect x="386.1" y="78.8" width="1.7" height="1.4"/><rect x="389.5" y="78.8" width="1.7" height="1.4"/><rect x="382.8" y="81.3" width="1.7" height="1.4"/><rect x="386.1" y="81.3" width="1.7" height="1.4"/><rect x="389.5" y="81.3" width="1.7" height="1.4"/><rect x="382.8" y="83.8" width="1.7" height="1.4"/><rect x="386.1" y="83.8" width="1.7" height="1.4"/><rect x="389.5" y="83.8" width="1.7" height="1.4"/><path d="M383.4,72v1.1h-3.8V88h14.9V73.1h-3.8V72h-1.3v1.1h-4.7V72H383.4z M393.2,86.7h-12.3v-8.8h12.3L393.2,86.7L393.2,86.7z M389.3,74.3v0.8h1.3v-0.8h2.5v2.3h-12.3v-2.3h2.5v0.8h1.3v-0.8H389.3z"/></g></g></svg></span><time datetime="2017-10-13T00:00:00+08:00">October 13, 2017</time></span> <span class="byline-item"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="15 309.7 16 16"><g><path d="M23.9 315.1v3.6c0 .5-.4.9-.9.9s-.9-.4-.9-.9v-3.6h1.8z"/><path d="M30.1 317.7c.5 3.9-2.3 7.5-6.2 7.9-3.9.5-7.5-2.3-7.9-6.2-.5-3.9 2.3-7.5 6.2-7.9v-1.8H24v1.8c1.1.1 2.7.7 3.5 1.4l1.3-1.3 1.3 1.3-1.3 1.3c.5.9 1.2 2.5 1.3 3.5zm-1.8.9c0-2.9-2.4-5.3-5.3-5.3s-5.3 2.4-5.3 5.3 2.4 5.3 5.3 5.3 5.3-2.3 5.3-5.3z"/></g></svg></span>1 min read</span>
+        </p>
+      
+
+      
+
+      
+    </div>
+  </div>
+</header>
+
+
+<main id="main" class="page-content" aria-label="Content">
+  <div class="inner">
+    <article class="entry-wrap">
+      <div class="entry-content">
+        <h1 id="swift代码优化">swift代码优化</h1>
+<p>更加详细的内容会同步更新在GitHub项目<a href="https://github.com/DKJone/ios-Tips">ios-Tips</a>中</p>
+
+<h1 id="影响编译速度的代码">影响编译速度的代码</h1>
+<blockquote>
+  <p>测试编译速度可已使用该<a href="https://github.com/RobertGummesson/BuildTimeAnalyzer-for-Xcode">工具</a></p>
+</blockquote>
+
+<h5 id="1自动类型推导的代码">1.自动类型推导的代码</h5>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">var</span> <span class="nv">model</span> <span class="p">:</span> <span class="kt">UILabel</span><span class="p">?</span>
+<span class="k">var</span> <span class="nv">cat</span> <span class="p">:</span> <span class="kt">String</span><span class="p">?</span>
+<span class="k">var</span> <span class="nv">name</span> <span class="p">:</span> <span class="kt">String</span><span class="p">?</span>
+<span class="k">var</span> <span class="nv">number</span> <span class="p">:</span> <span class="kt">Int</span><span class="p">?</span>
+
+<span class="c1">//build time : 8740.3ms</span>
+<span class="kd">func</span> <span class="nf">sendData</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">parameter</span> <span class="o">=</span> <span class="p">[</span><span class="s">"model"</span> <span class="p">:</span> <span class="n">model</span><span class="p">?</span><span class="o">.</span><span class="n">text</span> <span class="p">??</span> <span class="s">""</span><span class="p">,</span>
+                     <span class="s">"cat"</span> <span class="p">:</span> <span class="n">cat</span> <span class="p">??</span> <span class="s">""</span><span class="p">,</span>
+                     <span class="s">"name"</span> <span class="p">:</span> <span class="n">name</span> <span class="p">??</span> <span class="s">""</span><span class="p">,</span>
+                     <span class="s">"number"</span> <span class="p">:</span> <span class="n">number</span> <span class="p">??</span> <span class="mi">0</span><span class="p">,</span>
+                     <span class="s">"dog"</span> <span class="p">:</span> <span class="s">"dog"</span><span class="p">]</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"send request with parameter:</span><span class="se">\(</span><span class="n">parameter</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">//build time: 3235.4ms</span>
+<span class="k">let</span> <span class="nv">parameter</span> <span class="p">:</span> <span class="p">[</span><span class="kt">String</span> <span class="p">:</span> <span class="kt">AnyObject</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s">"model"</span> <span class="p">:</span> <span class="n">model</span><span class="p">?</span><span class="o">.</span><span class="n">text</span> <span class="p">??</span> <span class="s">""</span><span class="p">,</span>
+                               <span class="s">"cat"</span> <span class="p">:</span> <span class="n">cat</span> <span class="p">??</span> <span class="s">""</span><span class="p">,</span>
+                               <span class="s">"name"</span> <span class="p">:</span> <span class="n">name</span> <span class="p">??</span> <span class="s">""</span><span class="p">,</span>
+                               <span class="s">"number"</span> <span class="p">:</span> <span class="n">number</span> <span class="p">??</span> <span class="mi">0</span><span class="p">,</span>
+                               <span class="s">"dog"</span> <span class="p">:</span> <span class="s">"dog"</span><span class="p">]</span>
+</code></pre></div></div>
+
+<h5 id="2any-或-anyobjec-any">2.Any 或 AnyObjec 、any?</h5>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//build time: 200.3ms</span>
+<span class="k">let</span> <span class="nv">parameter</span> <span class="p">:</span> <span class="p">[</span><span class="kt">String</span> <span class="p">:</span> <span class="kt">String</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s">"model"</span> <span class="p">:</span> <span class="n">model</span><span class="p">?</span><span class="o">.</span><span class="n">text</span> <span class="p">??</span> <span class="s">""</span><span class="p">,</span>
+                    <span class="s">"cat"</span> <span class="p">:</span> <span class="n">cat</span> <span class="p">??</span> <span class="s">""</span><span class="p">,</span>
+                    <span class="s">"name"</span> <span class="p">:</span> <span class="n">name</span> <span class="p">??</span> <span class="s">""</span><span class="p">,</span>
+                    <span class="s">"number"</span> <span class="p">:</span> <span class="s">"</span><span class="se">\(</span><span class="n">number</span> <span class="p">??</span> <span class="mi">0</span><span class="se">)</span><span class="s">"</span><span class="p">,</span>
+                    <span class="s">"dog"</span> <span class="p">:</span> <span class="s">"dog"</span><span class="p">]</span>
+</code></pre></div></div>
+<h5 id="3运算时使用可选值">3.运算时使用可选值</h5>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//build time : 9804ms</span>
+<span class="kd">func</span> <span class="nf">calculateSize</span><span class="p">(</span><span class="nv">view</span> <span class="p">:</span> <span class="kt">UIView</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">CGSize</span><span class="p">{</span>
+    <span class="k">return</span> <span class="kt">CGSize</span><span class="p">(</span><span class="nv">width</span><span class="p">:</span> <span class="mi">10</span> <span class="o">+</span> <span class="p">(</span><span class="n">view</span><span class="p">?</span><span class="o">.</span><span class="n">bounds</span><span class="o">.</span><span class="n">width</span> <span class="p">??</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">view</span><span class="p">?</span><span class="o">.</span><span class="n">bounds</span><span class="o">.</span><span class="n">height</span> <span class="p">??</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="mi">22</span><span class="p">,</span> <span class="nv">height</span><span class="p">:</span> <span class="mi">20</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">//build time : 172ms</span>
+<span class="kd">func</span> <span class="nf">calculateSize</span><span class="p">(</span><span class="nv">view</span> <span class="p">:</span> <span class="kt">UIView</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">CGSize</span><span class="p">{</span>
+    <span class="k">let</span> <span class="nv">width</span> <span class="o">=</span> <span class="n">view</span><span class="p">?</span><span class="o">.</span><span class="n">bounds</span><span class="o">.</span><span class="n">width</span> <span class="p">??</span> <span class="mi">0</span>
+    <span class="k">let</span> <span class="nv">height</span> <span class="o">=</span> <span class="n">view</span><span class="p">?</span><span class="o">.</span><span class="n">bounds</span><span class="o">.</span><span class="n">height</span> <span class="p">??</span> <span class="mi">0</span>
+    <span class="k">return</span> <span class="kt">CGSize</span><span class="p">(</span><span class="nv">width</span><span class="p">:</span> <span class="mi">10</span> <span class="o">+</span> <span class="n">width</span> <span class="o">+</span> <span class="n">height</span> <span class="o">+</span> <span class="mi">22</span><span class="p">,</span> <span class="nv">height</span><span class="p">:</span> <span class="mi">20</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h5 id="4-三目运算符bool--a--b">4. 三目运算符<code class="highlighter-rouge">(Bool ? a : b)</code></h5>
+<h5 id="5-集合运算使用或">5. 集合运算使用+或+=</h5>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//build time 1400.6ms</span>
+<span class="kd">func</span> <span class="nf">arrPlusOperatos</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">arr1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+    <span class="k">let</span> <span class="nv">arr2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
+    <span class="n">result</span> <span class="o">+=</span> <span class="n">arr1</span> <span class="o">+</span> <span class="n">arr2</span> <span class="o">+</span> <span class="p">[</span><span class="mi">10</span><span class="p">]</span>
+<span class="p">}</span>
+<span class="c1">//build time 8.6ms</span>
+<span class="kd">func</span> <span class="nf">arrPlusOperatos</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">arr1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+    <span class="k">let</span> <span class="nv">arr2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
+    <span class="n">result</span><span class="o">.</span><span class="nf">appendContentsOf</span><span class="p">(</span><span class="n">arr1</span><span class="p">)</span>
+    <span class="n">result</span><span class="o">.</span><span class="nf">appendContentsOf</span><span class="p">(</span><span class="n">arr2</span><span class="p">)</span>
+    <span class="n">result</span><span class="o">.</span><span class="nf">appendContentsOf</span><span class="p">([</span><span class="mi">10</span><span class="p">])</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h5 id="6-string-合并使用-">6. String 合并使用 +</h5>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//build time 79.4ms</span>
+<span class="kd">func</span> <span class="nf">strPlusOperatos</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">str1</span> <span class="o">=</span> <span class="s">"1234567890"</span>
+    <span class="k">let</span> <span class="nv">str2</span> <span class="o">=</span> <span class="s">"ABCDEFGHIJK"</span>
+    <span class="n">result</span> <span class="o">+=</span> <span class="n">str1</span> <span class="o">+</span> <span class="n">str2</span> <span class="o">+</span> <span class="s">"hello world"</span>
+<span class="p">}</span>
+<span class="c1">//build time 6ms</span>
+<span class="kd">func</span> <span class="nf">strPlusOperatos</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">str1</span> <span class="o">=</span> <span class="s">"1234567890"</span>
+    <span class="k">let</span> <span class="nv">str2</span> <span class="o">=</span> <span class="s">"ABCDEFGHIJK"</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="s">"</span><span class="se">\(</span><span class="n">str1</span><span class="se">)\(</span><span class="n">str2</span><span class="se">)</span><span class="s">hello world"</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h5 id="7-模块化代码使用私有cocoapods-repository-让不同模块以framework或则a文件的形式在项目里使用如此每次编译的时候就只需要编译自己模块下的代码其他模块的代码将会被编译后缓存不需要重复编译">7. 模块化代码，使用私有Cocoapods repository. 让不同模块以Framework或则.a文件的形式在项目里使用。如此每次编译的时候就只需要编译自己模块下的代码。其他模块的代码将会被编译后缓存，不需要重复编译</h5>
+
+
+      </div>
+      
+    </article>
+
+    <footer id="footer" class="site-footer">
+  <div class="copyright">
+    
+      <p>&copy; 2018 DKJone's blog.</p>
+    
+  </div>
+</footer>
+
+  </div>
+</main>
+
+      </div>
+    </div>
+
+    
+
+<script async src="/assets/javascripts/main.js"></script>
+
+  </body>
+
+</html>

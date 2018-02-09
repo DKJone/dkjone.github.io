@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<!--
+    Basically Basic Jekyll Theme 1.1.3
+    Copyright 2017 Michael Rose - mademistakes.com | @mmistakes
+    Free for personal and commercial use under the MIT license
+    https://github.com/mmistakes/jekyll-basically-theme/blob/master/LICENSE.md
+-->
+<html lang="en-US" class="no-js">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+    
+    <!-- Begin Jekyll SEO tag v2.4.0 -->
+<title>xcode常见错误处理 | DKJone’s blog</title>
+<meta name="generator" content="Jekyll v3.6.2" />
+<meta property="og:title" content="xcode常见错误处理" />
+<meta name="author" content="DKJone" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="xcode常见错误原因，和怎样处理" />
+<meta property="og:description" content="xcode常见错误原因，和怎样处理" />
+<link rel="canonical" href="http://localhost:4000/2017/10/13/xcode%E5%B8%B8%E8%A7%81%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86.html" />
+<meta property="og:url" content="http://localhost:4000/2017/10/13/xcode%E5%B8%B8%E8%A7%81%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86.html" />
+<meta property="og:site_name" content="DKJone’s blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2017-10-13T00:00:00+08:00" />
+<script type="application/ld+json">
+{"description":"xcode常见错误原因，和怎样处理","author":{"@type":"Person","name":"DKJone"},"@type":"BlogPosting","url":"http://localhost:4000/2017/10/13/xcode%E5%B8%B8%E8%A7%81%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86.html","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/images/header70.jpg"},"name":"DKJone"},"headline":"xcode常见错误处理","dateModified":"2017-10-13T23:27:01+08:00","datePublished":"2017-10-13T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2017/10/13/xcode%E5%B8%B8%E8%A7%81%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86.html"},"@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+  
+
+  <script>
+    /* Cut the mustard */
+    if ( 'querySelector' in document && 'addEventListener' in window ) {
+      document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + 'js';
+    }
+  </script>
+
+  <link rel="stylesheet" href="/assets/stylesheets/main.css">
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Sans:400,400i,600,600i">
+  
+
+  
+    
+    <link rel="alternate" type="application/atom+xml" title="DKJone&#39;s blog" href="/atom.xml">
+  
+</head>
+
+
+  <body class="layout--post xcode常见错误处理">
+
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#primary-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+
+    <div class="sidebar-toggle-wrapper">
+      <button class="toggle navicon-button larr" type="button">
+        <span class="toggle-inner">
+          <span class="sidebar-toggle-label">Menu</span>
+          <span class="navicon"></span>
+        </span>
+      </button>
+    </div>
+
+    <div id="sidebar" class="sidebar">
+      <div class="inner">
+        <nav id="nav-primary" class="site-nav" itemscope itemtype="http://schema.org/SiteNavigationElement" aria-label="Main navigation">
+  <ul id="menu-main-navigation" class="menu">
+    <!-- Home link -->
+    <li class="menu-item">
+      <a href="/" itemprop="url">
+        <span itemprop="name">主页</span>
+      </a>
+    </li>
+
+    <!-- site.pages links -->
+    
+    
+
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+  </ul>
+</nav>
+        <ul class="contact-list">
+  
+    <li>
+      <a href="mailto:1136165636@qq.com">
+        <span class="icon icon--email"><svg xmlns="http://www.w3.org/2000/svg" viewBox="313.1 3.7 16 16"><path d="M318.5 8.9c0-.2.2-.4.4-.4h4.5c.2 0 .4.2.4.4s-.2.4-.4.4h-4.5c-.3 0-.4-.2-.4-.4zm.4 2.1h4.5c.2 0 .4-.2.4-.4s-.2-.4-.4-.4h-4.5c-.2 0-.4.2-.4.4s.1.4.4.4zm3.5 1.2c0-.2-.2-.4-.4-.4h-3.1c-.2 0-.4.2-.4.4s.2.4.4.4h3.1c.2.1.4-.1.4-.4zm-1.5-8.4l-1.7 1.4c-.2.1-.2.4 0 .6s.4.2.6 0l1.4-1.2 1.4 1.2c.2.1.4.1.6 0s.1-.4 0-.6l-1.7-1.4c-.3-.1-.5-.1-.6 0zm7.8 6.2c.1.1.1.2.1.3v7.9c0 .8-.7 1.5-1.5 1.5h-12.5c-.8 0-1.5-.7-1.5-1.5v-7.9c0-.1.1-.2.1-.3l1.6-1.3c.2-.1.4-.1.6 0s.1.4 0 .6l-1.2 1 1.8 1.3v-4c0-.6.5-1.1 1.1-1.1h7.5c.6 0 1.1.5 1.1 1.1v4l1.8-1.3-1.2-1c-.2-.1-.2-.4 0-.6s.4-.2.6 0l1.6 1.3zm-11.6 2.2l4 2.8 4-2.8V7.6c0-.1-.1-.2-.2-.2h-7.5c-.1 0-.2.1-.2.2v4.6zm10.9-1l-4.7 3.4 3.4 2.6c.2.1.2.4.1.6-.1.2-.4.2-.6.1l-3.6-2.8-1.2.8c-.1.1-.3.1-.5 0l-1.2-.8-3.6 2.8c-.2.1-.4.1-.6-.1-.1-.2-.1-.4.1-.6l3.4-2.6-4.7-3.4v7.1c0 .4.3.6.6.6h12.5c.4 0 .6-.3.6-.6v-7.1z"/></svg></span>
+        <span class="label">Email</span>
+      </a>
+    </li>
+  
+
+  
+    <li><a href="https://github.com/DKJone">
+  <span class="icon icon--github"><svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="1.414"><path d="M8 0C3.58 0 0 3.582 0 8c0 3.535 2.292 6.533 5.47 7.59.4.075.547-.172.547-.385 0-.19-.007-.693-.01-1.36-2.226.483-2.695-1.073-2.695-1.073-.364-.924-.89-1.17-.89-1.17-.725-.496.056-.486.056-.486.803.056 1.225.824 1.225.824.714 1.223 1.873.87 2.33.665.072-.517.278-.87.507-1.07-1.777-.2-3.644-.888-3.644-3.953 0-.873.31-1.587.823-2.147-.09-.202-.36-1.015.07-2.117 0 0 .67-.215 2.2.82.64-.178 1.32-.266 2-.27.68.004 1.36.092 2 .27 1.52-1.035 2.19-.82 2.19-.82.43 1.102.16 1.915.08 2.117.51.56.82 1.274.82 2.147 0 3.073-1.87 3.75-3.65 3.947.28.24.54.73.54 1.48 0 1.07-.01 1.93-.01 2.19 0 .21.14.46.55.38C13.71 14.53 16 11.53 16 8c0-4.418-3.582-8-8-8"/></svg></span>
+  <span class="label">GitHub</span>
+</a>
+</li>
+  
+
+  
+    <li><a href="https://twitter.com/jone_dk">
+  <span class="icon icon--twitter"><svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="1.414"><path d="M16 3.038c-.59.26-1.22.437-1.885.517.677-.407 1.198-1.05 1.443-1.816-.634.37-1.337.64-2.085.79-.598-.64-1.45-1.04-2.396-1.04-1.812 0-3.282 1.47-3.282 3.28 0 .26.03.51.085.75-2.728-.13-5.147-1.44-6.766-3.42C.83 2.58.67 3.14.67 3.75c0 1.14.58 2.143 1.46 2.732-.538-.017-1.045-.165-1.487-.41v.04c0 1.59 1.13 2.918 2.633 3.22-.276.074-.566.114-.865.114-.21 0-.41-.02-.61-.058.42 1.304 1.63 2.253 3.07 2.28-1.12.88-2.54 1.404-4.07 1.404-.26 0-.52-.015-.78-.045 1.46.93 3.18 1.474 5.04 1.474 6.04 0 9.34-5 9.34-9.33 0-.14 0-.28-.01-.42.64-.46 1.2-1.04 1.64-1.7z" fill-rule="nonzero"/></svg></span>
+  <span class="label">Twitter</span>
+</a>
+</li>
+  
+
+  <li>
+    
+      <a href="/atom.xml" title="Atom Feed">
+        <span class="icon icon--rss"><svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="1.414"><path d="M12.8 16C12.8 8.978 7.022 3.2 0 3.2V0c8.777 0 16 7.223 16 16h-3.2zM2.194 11.61c1.21 0 2.195.985 2.195 2.196 0 1.21-.99 2.194-2.2 2.194C.98 16 0 15.017 0 13.806c0-1.21.983-2.195 2.194-2.195zM10.606 16h-3.11c0-4.113-3.383-7.497-7.496-7.497v-3.11c5.818 0 10.606 4.79 10.606 10.607z"/></svg></span>
+        <span class="label">Subscribe</span>
+      </a>
+    
+  </li>
+</ul>
+
+      </div>
+    </div>
+
+    <div class="canvas">
+      <div class="wrapper">
+        
+
+<header id="masthead">
+  <div class="inner">
+    <div class="title-area">
+      
+        <p class="site-title">
+          <a href="/">
+            <img src="/assets/images/header70.jpg" alt="" class="site-logo">
+            <span>DKJone&#39;s blog</span>
+          </a>
+        </p>
+      
+    </div>
+  </div>
+</header>
+
+        <header class="intro">
+  
+
+  <div class="inner">
+    <div class="intro-text">
+      <h1 class="intro-title">xcode常见错误处理
+</h1>
+      
+
+      
+        
+
+        <p class="entry-meta">
+          <span class="byline-item">by DKJone</span><span class="byline-item"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="379 72 16 16"><g><g><path fill="none" d="M380.8,86.7h12.3v-8.8h-12.3V86.7z M389.5,78.8h1.7v1.4h-1.7V78.8z M389.5,81.3h1.7v1.4h-1.7V81.3z M389.5,83.8h1.7v1.4h-1.7V83.8z M386.1,78.8h1.7v1.4h-1.7V78.8z M386.1,81.3h1.7v1.4h-1.7V81.3z M386.1,83.8h1.7v1.4h-1.7V83.8z M382.8,78.8h1.7v1.4h-1.7V78.8z M382.8,81.3h1.7v1.4h-1.7V81.3z M382.8,83.8h1.7v1.4h-1.7V83.8z"/><polygon fill="none" points="384.7 75.1 383.4 75.1 383.4 74.3 380.8 74.3 380.8 76.6 393.2 76.6 393.2 74.3 390.6 74.3 390.6 75.1 389.3 75.1 389.3 74.3 384.7 74.3"/><rect x="382.8" y="78.8" width="1.7" height="1.4"/><rect x="386.1" y="78.8" width="1.7" height="1.4"/><rect x="389.5" y="78.8" width="1.7" height="1.4"/><rect x="382.8" y="81.3" width="1.7" height="1.4"/><rect x="386.1" y="81.3" width="1.7" height="1.4"/><rect x="389.5" y="81.3" width="1.7" height="1.4"/><rect x="382.8" y="83.8" width="1.7" height="1.4"/><rect x="386.1" y="83.8" width="1.7" height="1.4"/><rect x="389.5" y="83.8" width="1.7" height="1.4"/><path d="M383.4,72v1.1h-3.8V88h14.9V73.1h-3.8V72h-1.3v1.1h-4.7V72H383.4z M393.2,86.7h-12.3v-8.8h12.3L393.2,86.7L393.2,86.7z M389.3,74.3v0.8h1.3v-0.8h2.5v2.3h-12.3v-2.3h2.5v0.8h1.3v-0.8H389.3z"/></g></g></svg></span><time datetime="2017-10-13T00:00:00+08:00">October 13, 2017</time></span> <span class="byline-item"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="15 309.7 16 16"><g><path d="M23.9 315.1v3.6c0 .5-.4.9-.9.9s-.9-.4-.9-.9v-3.6h1.8z"/><path d="M30.1 317.7c.5 3.9-2.3 7.5-6.2 7.9-3.9.5-7.5-2.3-7.9-6.2-.5-3.9 2.3-7.5 6.2-7.9v-1.8H24v1.8c1.1.1 2.7.7 3.5 1.4l1.3-1.3 1.3 1.3-1.3 1.3c.5.9 1.2 2.5 1.3 3.5zm-1.8.9c0-2.9-2.4-5.3-5.3-5.3s-5.3 2.4-5.3 5.3 2.4 5.3 5.3 5.3 5.3-2.3 5.3-5.3z"/></g></svg></span>1 min read</span>
+        </p>
+      
+
+      
+
+      
+    </div>
+  </div>
+</header>
+
+
+<main id="main" class="page-content" aria-label="Content">
+  <div class="inner">
+    <article class="entry-wrap">
+      <div class="entry-content">
+        <h1 id="xcode常见错误处理">xcode常见错误处理</h1>
+<p>更加详细的内容会同步更新在GitHub项目<a href="https://github.com/DKJone/ios-Tips">ios-Tips</a>中</p>
+
+<h1 id="xcode-在ocswift混编时报错错误内容">Xcode 在OC、swift混编时报错错误内容</h1>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>missing required module 'CommonCrypto'
+</code></pre></div></div>
+<h4 id="出错原因">出错原因：</h4>
+<p><code class="highlighter-rouge">
+由于苹果的C语言库在swift中没有对应的framework，所以OC框架在使用c语言库后作为外部框架导入后找不到原c语言框架
+</code></p>
+<h4 id="解决方法">解决方法</h4>
+<p><code class="highlighter-rouge">
+新建对应的虚拟Framework（在此使用脚本自动生成模块并映射正确的Xcode/SDK路径），然后加入到项目依赖中，护体方法如下
+</code></p>
+<ol>
+  <li>选择xcode工程文件</li>
+  <li>选择<code class="highlighter-rouge">info</code>选项</li>
+  <li>添加<code class="highlighter-rouge">target</code>-&gt;<code class="highlighter-rouge">Aggregate</code></li>
+  <li>添加Script将如下脚本粘贴到图示处
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkdir <span class="nt">-p</span> <span class="s2">"</span><span class="k">${</span><span class="nv">BUILT_PRODUCTS_DIR</span><span class="k">}</span><span class="s2">/CommonCryptoModuleMap"</span>
+<span class="nb">cat</span> <span class="o">&lt;&lt;</span><span class="no">EOF</span><span class="sh"> &gt; "</span><span class="k">${</span><span class="nv">BUILT_PRODUCTS_DIR</span><span class="k">}</span><span class="sh">/CommonCryptoModuleMap/module.modulemap"
+module CommonCrypto [system] {
+ header "</span><span class="k">${</span><span class="nv">SDKROOT</span><span class="k">}</span><span class="sh">/usr/include/CommonCrypto/CommonCrypto.h"
+ export *
+}
+</span><span class="no">EOF
+</span></code></pre></div>    </div>
+  </li>
+  <li>选择<code class="highlighter-rouge">Build Phases</code>选项，将CommonCrypto框架添加到<code class="highlighter-rouge">Target Dependencies</code><br />
+<img src="https://github.com/DKJone/ios-Tips/tree/master/images/img_01.png" alt="image" />
+<img src="https://github.com/DKJone/ios-Tips/tree/master/images/img_02.png" alt="image" /></li>
+</ol>
+
+<h1 id="blydatamanager错误导致app在发布后ios93一下系统异常崩溃">BLYDataManager错误导致app在发布后IOS9.3一下系统异常崩溃</h1>
+
+<p>ios ipa测试时没任何问题但是上传AppStore后会在iOS 9上出现崩溃
+下面是腾讯bugly给的崩溃信息</p>
+<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">BLYDataManager</span> <span class="nf">persistData</span><span class="p">:</span><span class="nf">ofType</span><span class="p">:</span><span class="n">enableNotifications</span><span class="o">:</span><span class="n">withCompletionBlock</span><span class="o">:</span><span class="p">]</span><span class="n">_block_invoke</span>
+<span class="n">EXC_BAD_ACCESS</span>
+
+</code></pre></div></div>
+<h4 id="出错原因-1">出错原因：</h4>
+<blockquote>
+  <h3 id="在xcode8中如果你的图片资源文件里有16位图或者图片显示模式为p3并且deployment-target是ios93以下的就会出现这个问题话说我公司的项目里面就出现了一个小按钮导致了这次崩溃不知道设计师是怎么弄出来的这个特殊图片如果你的app需要支持wide-color-functionality那你就必须设置deployment-target为ios93以上如果你的app不需要支持wide-color-functionality并且你希望兼容ios老版本那么你需要将所有16-bit-or-p3-assets的图片转换为8-bit-srgb-assets">在Xcode8中，如果你的图片资源文件里有16位图或者图片显示模式为P3，并且Deployment Target是iOS9.3以下的就会出现这个问题。（话说我公司的项目里面就出现了一个小按钮，导致了这次崩溃，不知道设计师是怎么弄出来的这个特殊图片…）如果你的App需要支持wide color functionality，那你就必须设置Deployment Target为iOS9.3以上。如果你的APP不需要支持wide color functionality并且你希望兼容iOS老版本，那么你需要将所有16-bit or P3 assets的图片转换为8-bit sRGB assets</h3>
+</blockquote>
+
+<h4 id="解决方法-1">解决方法</h4>
+<ol>
+  <li>打一个ipa包，解压你的应用的ipa包，进入到你应用的Playload文件夹。</li>
+  <li>用find命令定位到Assets.car文件
+find . -name ‘Assets.car’</li>
+  <li>使用 assetutil 命令导出图片的信息存储到Assets.json文件中
+    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>xcrun <span class="nt">--sdk</span> iphoneos assetutil <span class="nt">--info</span> <span class="o">{</span>Assets.car路径<span class="o">}</span> <span class="o">&gt;</span> /tmp/Assets.json
+//示例：
+<span class="nb">sudo </span>xcrun <span class="nt">--sdk</span> iphoneos assetutil <span class="nt">--info</span> ./abc.app/Assets.car <span class="o">&gt;</span> /tmp/Assets.json
+</code></pre></div>    </div>
+  </li>
+  <li>打开刚才生成的Assets.json文件，查找含有<code class="highlighter-rouge">"DisplayGamut" : "P3"</code>的内容。这个对应的Name就是出现问题的图片了。
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>open /tmp/Assets.json
+</code></pre></div>    </div>
+    <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+ </span><span class="s2">"Compression"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"lzfse"</span><span class="p">,</span><span class="w">
+ </span><span class="s2">"BitsPerSample"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span><span class="w">
+ </span><span class="s2">"LayoutDirection"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"0 - Horizontal"</span><span class="p">,</span><span class="w">
+ </span><span class="s2">"AssetType"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Image"</span><span class="p">,</span><span class="w">
+ </span><span class="s2">"ColorModel"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"RGB"</span><span class="p">,</span><span class="w">
+ </span><span class="s2">"Name"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"CRM_msg_unread"</span><span class="p">,</span><span class="w">
+ </span><span class="s2">"PixelWidth"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">90</span><span class="p">,</span><span class="w">
+ </span><span class="s2">"Graphics"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"GLES2,0"</span><span class="p">,</span><span class="w">
+ </span><span class="s2">"Subtype"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+ </span><span class="s2">"PixelHeight"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">90</span><span class="p">,</span><span class="w">
+ </span><span class="s2">"SizeClass Horizontal"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"universal"</span><span class="p">,</span><span class="w">
+ </span><span class="s2">"EdgeInsets"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"top:0 left:0 bottom:0 right:0"</span><span class="p">,</span><span class="w">
+ </span><span class="s2">"Scale"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+ </span><span class="s2">"Memory"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"512MB"</span><span class="p">,</span><span class="w">
+ </span><span class="s2">"Opaque"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+ </span><span class="s2">"DisplayGamut"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"P3"</span><span class="p">,</span><span class="w">
+ </span><span class="s2">"Idiom"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"universal"</span><span class="p">,</span><span class="w">
+ </span><span class="s2">"Encoding"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"ARGB-16"</span><span class="p">,</span><span class="w">
+ </span><span class="s2">"Image Type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"kCoreThemeOnePartScale"</span><span class="p">,</span><span class="w">
+ </span><span class="s2">"SizeClass Vertical"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"universal"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span></code></pre></div>    </div>
+  </li>
+  <li>找到对应的图片，使用mac自带的预览打开，编辑图片后保存就可以将图片保存成正确的格式</li>
+  <li>除了使用上面的方法，还可以使用bash script直接处理所有图片为正确格式，这样我们就不用去定位是哪个图片的问题了，或许更方便一些
+    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+<span class="nv">DIRECTORY</span><span class="o">=</span><span class="nv">$1</span>
+<span class="nb">echo</span> <span class="s2">"------------------------------"</span>
+<span class="nb">echo</span> <span class="s2">"Passed Resources with xcassets folder argument is &lt;</span><span class="nv">$DIRECTORY</span><span class="s2">&gt;"</span>
+<span class="nb">echo</span> <span class="s2">"------------------------------"</span>
+<span class="nb">echo</span> <span class="s2">"Processing asset:"</span>
+<span class="nv">XSAASSETSD</span><span class="o">=</span><span class="s2">"</span><span class="k">$(</span>find <span class="s2">"</span><span class="nv">$DIRECTORY</span><span class="s2">"</span> <span class="nt">-name</span> <span class="s1">'*.xcassets'</span><span class="k">)</span><span class="s2">"</span>
+<span class="k">for </span>xcasset <span class="k">in</span> <span class="nv">$XSAASSETSD</span>
+<span class="k">do
+ </span><span class="nb">echo</span> <span class="s2">"---</span><span class="nv">$xcasset</span><span class="s2">"</span>
+ <span class="nv">IMAGESETS</span><span class="o">=</span><span class="s2">"</span><span class="k">$(</span>find <span class="s2">"</span><span class="nv">$xcasset</span><span class="s2">"</span> <span class="nt">-name</span> <span class="s1">'*.imageset'</span><span class="k">)</span><span class="s2">"</span>
+ <span class="k">for </span>imageset <span class="k">in</span> <span class="nv">$IMAGESETS</span>
+ <span class="k">do
+     </span><span class="nb">echo</span> <span class="s2">"------</span><span class="nv">$imageset</span><span class="s2">"</span>
+     <span class="nv">FILES</span><span class="o">=</span><span class="s2">"</span><span class="k">$(</span>find <span class="s2">"</span><span class="nv">$imageset</span><span class="s2">"</span> <span class="nt">-name</span> <span class="s1">'*.png'</span><span class="k">)</span><span class="s2">"</span>
+     <span class="k">for </span>file <span class="k">in</span> <span class="nv">$FILES</span> 
+     <span class="k">do
+         </span><span class="nb">echo</span> <span class="s2">"---------</span><span class="nv">$file</span><span class="s2">"</span>
+         sips <span class="nt">-m</span> <span class="s2">"/System/Library/Colorsync/Profiles/sRGB Profile.icc"</span> <span class="nv">$file</span> <span class="nt">--out</span> <span class="nv">$file</span>
+     <span class="k">done
+ done
+done
+</span><span class="nb">echo</span> <span class="s2">"------------------------------"</span>
+<span class="nb">echo</span> <span class="s2">"script successfully finished"</span>
+<span class="nb">echo</span> <span class="s2">"------------------------------"</span>
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h1 id="ipad-alertcontroller崩溃">ipad alertController崩溃</h1>
+
+<p>同样的 UIAlertController 在iPhone上运行时正常，而切换到iPad上后发生崩溃</p>
+
+<h4 id="出错原因-2">出错原因：</h4>
+<blockquote>
+  <h3 id="在ipad上actionsheet会被以popover的形式显示出来它衣服在当前页面的某一个组件上因为必须指定一个sourceview用于指定actionsheet的依附点在这个空间的周围被弹出同时还应指定一个sourcerect用于指定他被包含在哪一片区域内">在iPad上，ActionSheet会被以popover的形式显示出来，它衣服在当前页面的某一个组件上，因为必须指定一个sourceView用于指定ActionSheet的依附点（在这个空间的周围被弹出），同时还应指定一个sourceRect用于指定他被包含在哪一片区域内</h3>
+</blockquote>
+
+<h4 id="解决方法-2">解决方法</h4>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//ipad使用，不加ipad上会崩溃</span>
+        <span class="k">if</span> <span class="k">let</span> <span class="nv">popoverController</span> <span class="o">=</span> <span class="n">alertController</span><span class="o">.</span><span class="n">popoverPresentationController</span> <span class="p">{</span>
+            <span class="n">popoverController</span><span class="o">.</span><span class="n">sourceView</span> <span class="o">=</span> <span class="n">sender</span>
+            <span class="n">popoverController</span><span class="o">.</span><span class="n">sourceRect</span> <span class="o">=</span> <span class="n">sender</span><span class="o">.</span><span class="n">bounds</span>
+        <span class="p">}</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>注意：当你把一个Action的ActionStyle设置为cancel的时候，iPad将不会显示这个Action</p>
+</blockquote>
+
+      </div>
+      
+    </article>
+
+    <footer id="footer" class="site-footer">
+  <div class="copyright">
+    
+      <p>&copy; 2018 DKJone's blog.</p>
+    
+  </div>
+</footer>
+
+  </div>
+</main>
+
+      </div>
+    </div>
+
+    
+
+<script async src="/assets/javascripts/main.js"></script>
+
+  </body>
+
+</html>
