@@ -1,0 +1,34 @@
+I"8<h1 id="rxswift-文档翻译">RxSwift-文档翻译</h1>
+
+<h2 id="翻译后的完整项目地址"><a href="https://github.com/DKJone/RxSwift">翻译后的完整项目地址</a></h2>
+<p>对RxSwift 官方playground的翻译，playGround基于2016年12月1日版本</p>
+
+<blockquote>
+  <h1 id="重要提示使用rxplayground">重要提示：使用Rx.playground：</h1>
+  <ol>
+    <li>打开Rx.xcworkspace.</li>
+    <li>编译 RxSwift-macOS 项目 (Product → Build)</li>
+    <li>在项目导航栏你打开RX playground</li>
+    <li>打开调试窗口 (<strong>View</strong> → <strong>Debug Area</strong> → <strong>Show Debug Area</strong>).</li>
+  </ol>
+</blockquote>
+
+<hr />
+
+<h2 id="目录">目录:</h2>
+<ol>
+  <li><a href="/Introduction.md">序章 介绍</a></li>
+  <li><a href="/Creating_and_Subscribing_to_Observables.md">第一章 创建并使用Observables</a></li>
+  <li><a href="/Working_with_Subjects.md">第二章 使用Subjects</a></li>
+  <li><a href="/Combining_Operators.md">第三章 组合</a></li>
+  <li><a href="/Transforming_Operators.md">第四章 转换</a></li>
+  <li><a href="/Filtering_and_Conditional_Operators.md">第五章 过滤</a></li>
+  <li><a href="/Mathematical_and_Aggregate_Operators.md">第六章 数学理论</a></li>
+  <li><a href="/Connectable_Operators.md">第七章 Connectable</a></li>
+  <li><a href="/Error_Handling_Operators.md">第八章 错误处理</a></li>
+  <li><a href="/Debugging_Operators.md">附录一 调试</a></li>
+  <li><a href="/Enable_RxSwift.md">附录二 cocoapods</a></li>
+</ol>
+
+<p><a href="/Introduction.md">下一章</a></p>
+:ET

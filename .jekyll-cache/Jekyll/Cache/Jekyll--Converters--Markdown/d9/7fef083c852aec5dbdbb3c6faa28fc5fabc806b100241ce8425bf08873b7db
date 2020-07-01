@@ -1,0 +1,26 @@
+I"�	<h1 id="ios开发中常见不规范代码">IOS开发中常见不规范代码</h1>
+<p>更加详细的内容会同步更新在GitHub项目<a href="https://github.com/DKJone/ios-Tips">ios-Tips</a>中</p>
+
+<h1 id="容易让人误解的代码">容易让人误解的代码</h1>
+<h5 id="1-自动类型推导的代码">1. 自动类型推导的代码</h5>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mf">12.1</span> <span class="p">??</span> <span class="mi">0</span>  <span class="o">-</span> <span class="mi">1</span> <span class="p">??</span> <span class="mi">0</span>      <span class="c1">//12.1</span>
+<span class="c1">//12.1 ?? (0 - 1 )?? 0</span>
+
+</code></pre></div></div>
+<p>结果容易被误解为是11.1，由于算数预算副优先级高于三目运算符所以正确的结果是<code class="language-plaintext highlighter-rouge">12.1 ?? (0 - 1 )?? 0</code></p>
+
+<h1 id="容易忽略的错误代码">容易忽略的错误代码</h1>
+
+<h5 id="1-日期格式yyyy-mm-dd与yyyy-mm-dd">1. 日期格式YYYY-MM-dd与yyyy-MM-DD</h5>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="nv">formatter</span> <span class="o">=</span> <span class="kt">DateFormatter</span><span class="p">()</span>
+<span class="n">formatter</span><span class="o">.</span><span class="n">dateFormat</span> <span class="o">=</span> <span class="s">"yyyy-MM-dd"</span>
+<span class="k">let</span> <span class="nv">st</span> <span class="o">=</span> <span class="n">formatter</span><span class="o">.</span><span class="nf">date</span><span class="p">(</span><span class="nv">from</span><span class="p">:</span> <span class="s">"2017-12-31"</span><span class="p">)</span><span class="c1">//2017-12-31</span>
+<span class="n">formatter</span><span class="o">.</span><span class="n">dateFormat</span> <span class="o">=</span> <span class="s">"YYYY-MM-dd"</span>
+<span class="n">formatter</span><span class="o">.</span><span class="nf">string</span><span class="p">(</span><span class="nv">from</span><span class="p">:</span> <span class="n">st</span><span class="o">!</span><span class="p">)</span><span class="c1">//2018-12-31</span>
+</code></pre></div></div>
+<p>产生错误的原因：</p>
+<blockquote>
+  <p>在IOS中YYYY根据周数来判断是哪一年而2017-12-31是周日算到2018年的第一周中所以产生了错误</p>
+</blockquote>
+
+:ET

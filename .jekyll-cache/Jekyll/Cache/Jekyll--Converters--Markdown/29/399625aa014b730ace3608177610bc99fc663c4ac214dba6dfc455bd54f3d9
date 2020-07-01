@@ -1,0 +1,344 @@
+I"��<h3 id="介绍">介绍:</h3>
+<p>###swift语法更新</p>
+
+<p><a href="https://github.com/apple/swift-evolution/blob/master/proposals/0079-upgrade-self-from-weak-to-strong.md">SE-0079</a> 允许<code class="language-plaintext highlighter-rouge">self</code>在闭包中使用可选绑定</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// swift3</span>
+<span class="nx">guard</span> <span class="kd">let</span> <span class="s2">`self`</span> <span class="o">=</span> <span class="nb">self</span> <span class="k">else</span> <span class="p">{</span><span class="k">return</span><span class="p">}</span>
+
+<span class="c1">// swift4.2</span>
+<span class="nx">guard</span> <span class="kd">let</span> <span class="nb">self</span> <span class="o">=</span> <span class="nb">self</span> <span class="k">else</span> <span class="p">{</span><span class="k">return</span><span class="p">}</span>
+
+</code></pre></div></div>
+<p>使用上面代码分别在swift3、swift4.2的闭包中将弱引用的self转为强引用。但是Apple的Chris Lattner表示swift3的写法是“<a href="https://lists.swift.org/pipermail/swift-evolution/Week-of-Mon-20160118/007425.html">一个编译器错误</a>”。</p>
+
+<p><a href="https://github.com/apple/swift-evolution/blob/master/proposals/0197-remove-where.md">SE-0197</a>添加<code class="language-plaintext highlighter-rouge">removeAll(where:)</code>方法到标准库，用于删除集合中满足条件的元素</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//swift 3</span>
+<span class="k">var</span> <span class="nv">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
+<span class="c1">// 删除奇数</span>
+<span class="n">nums</span> <span class="o">=</span> <span class="n">nums</span><span class="o">.</span><span class="n">filter</span> <span class="p">{</span> <span class="o">!</span><span class="nf">isOdd</span><span class="p">(</span><span class="nv">$0</span><span class="p">)</span> <span class="p">}</span>
+
+<span class="c1">//swift 4.2</span>
+<span class="n">nums</span><span class="o">.</span><span class="nf">removeAll</span><span class="p">(</span><span class="nv">where</span><span class="p">:</span> <span class="n">isOdd</span><span class="p">)</span>
+</code></pre></div></div>
+<p><code class="language-plaintext highlighter-rouge">filter</code>方法完成此操作存在性能问题 1.重新分配了内存，2.需完整拷贝原数组</p>
+
+<p><a href="https://github.com/apple/swift-evolution/blob/master/proposals/0199-bool-toggle.md">SE-0199</a>添加<code class="language-plaintext highlighter-rouge">.toggle()</code>方法到BOOL值，让原值反转</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//swift 3</span>
+<span class="n">myVar</span><span class="o">.</span><span class="n">prop1</span><span class="o">.</span><span class="n">prop2</span><span class="o">.</span><span class="n">enabled</span> <span class="o">=</span> <span class="o">!</span><span class="n">myVar</span><span class="o">.</span><span class="n">prop1</span><span class="o">.</span><span class="n">prop2</span><span class="o">.</span><span class="n">enabled</span>
+
+<span class="c1">//swift 4.2</span>
+<span class="n">myVar</span><span class="o">.</span><span class="n">prop1</span><span class="o">.</span><span class="n">prop2</span><span class="o">.</span><span class="n">enabled</span><span class="o">.</span><span class="nf">toggle</span><span class="p">()</span>
+
+</code></pre></div></div>
+<p><a href="https://github.com/apple/swift-evolution/blob/master/proposals/0202-random-unification.md">SE-0202</a>随机数生成API</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 生成随机数</span>
+<span class="kt">Int</span><span class="o">.</span><span class="nf">random</span><span class="p">(</span><span class="nv">in</span><span class="p">:</span> <span class="mi">1</span><span class="o">...</span><span class="mi">1000</span><span class="p">)</span>
+<span class="kt">UInt8</span><span class="o">.</span><span class="nf">random</span><span class="p">(</span><span class="nv">in</span><span class="p">:</span> <span class="o">.</span><span class="n">min</span> <span class="o">...</span> <span class="o">.</span><span class="n">max</span><span class="p">)</span>
+<span class="kt">Double</span><span class="o">.</span><span class="nf">random</span><span class="p">(</span><span class="nv">in</span><span class="p">:</span> <span class="mi">0</span><span class="o">..&lt;</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1">// 随机从数组中取值</span>
+<span class="k">let</span> <span class="nv">emotions</span> <span class="o">=</span> <span class="s">"😀😂😊😍🤪😎😩😭😡"</span>
+<span class="k">let</span> <span class="nv">randomEmotion</span> <span class="o">=</span> <span class="n">emotions</span><span class="o">.</span><span class="nf">randomElement</span><span class="p">()</span><span class="o">!</span> <span class="c1">//可能是其中一个</span>
+
+<span class="c1">// 数组乱序</span>
+<span class="k">let</span> <span class="nv">numbers</span> <span class="o">=</span> <span class="mi">1</span><span class="o">...</span><span class="mi">10</span>
+<span class="k">let</span> <span class="nv">shuffled</span> <span class="o">=</span> <span class="n">numbers</span><span class="o">.</span><span class="nf">shuffled</span><span class="p">()</span><span class="c1">//1-10的乱序数组</span>
+
+</code></pre></div></div>
+
+<p><a href="https://github.com/apple/swift-evolution/blob/master/proposals/0204-add-last-methods.md">SE-0204</a>添加<code class="language-plaintext highlighter-rouge">last(where:)</code> 和<code class="language-plaintext highlighter-rouge">lastIndex(where:) </code>获取集合中最后满足条件的元素和位置</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// swift 3</span>
+<span class="k">let</span> <span class="nv">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">20</span><span class="p">]</span>
+<span class="n">a</span><span class="o">.</span><span class="nf">first</span><span class="p">(</span><span class="nv">where</span><span class="p">:</span> <span class="p">{</span> <span class="nv">$0</span> <span class="o">&gt;</span> <span class="mi">25</span> <span class="p">})</span>         <span class="c1">// 30</span>
+<span class="n">a</span><span class="o">.</span><span class="nf">index</span><span class="p">(</span><span class="nv">where</span><span class="p">:</span> <span class="p">{</span> <span class="nv">$0</span> <span class="o">&gt;</span> <span class="mi">25</span> <span class="p">})</span>         <span class="c1">// 1</span>
+<span class="n">a</span><span class="o">.</span><span class="nf">index</span><span class="p">(</span><span class="nv">of</span><span class="p">:</span> <span class="mi">10</span><span class="p">)</span>                     <span class="c1">// 2</span>
+<span class="c1">// 需要获取最后的需要将集合倒序</span>
+<span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="nf">reversed</span><span class="p">()</span><span class="o">.</span><span class="nf">index</span><span class="p">(</span><span class="nv">where</span><span class="p">:</span> <span class="p">{</span> <span class="nv">$0</span> <span class="o">&gt;</span> <span class="mi">25</span> <span class="p">})?</span><span class="o">.</span><span class="n">base</span><span class="p">)</span><span class="o">.</span><span class="nf">map</span><span class="p">({</span> <span class="n">a</span><span class="o">.</span><span class="nf">index</span><span class="p">(</span><span class="nv">before</span><span class="p">:</span> <span class="nv">$0</span><span class="p">)</span> <span class="p">})</span>
+<span class="c1">// swift 4.2</span>
+<span class="n">a</span><span class="o">.</span><span class="nf">last</span><span class="p">(</span><span class="nv">where</span><span class="p">:</span> <span class="p">{</span> <span class="nv">$0</span> <span class="o">&gt;</span> <span class="mi">25</span> <span class="p">})</span>          <span class="c1">// 40</span>
+<span class="n">a</span><span class="o">.</span><span class="nf">lastIndex</span><span class="p">(</span><span class="nv">where</span><span class="p">:</span> <span class="p">{</span> <span class="nv">$0</span> <span class="o">&gt;</span> <span class="mi">25</span> <span class="p">})</span>     <span class="c1">// 7</span>
+<span class="n">a</span><span class="o">.</span><span class="nf">lastIndex</span><span class="p">(</span><span class="nv">of</span><span class="p">:</span> <span class="mi">10</span><span class="p">)</span>                 <span class="c1">// 6</span>
+</code></pre></div></div>
+<p><a href="https://github.com/apple/swift-evolution/blob/master/proposals/0206-hashable-enhancements.md">SE-0206</a><code class="language-plaintext highlighter-rouge">Hashable</code>重新设计</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// swift 3
+extension Point: Equatable{
+    func ==(lhs: Testhash, rhs: Testhash) -&gt; Bool {
+        return lhs.hashValue == rhs.hashValue
+    }
+}
+extension Point: Equatable {
+    var hashValue: Int {
+        get {
+            return self.x + self.y * self.x
+        }
+    }
+}
+
+// swift 4.2
+extension Point: Equatable {
+    static func ==(lhs: Point, rhs: Point) -&gt; Bool {
+        // Ignore distanceFromOrigin for determining equality
+        return lhs.x == rhs.x &amp;&amp; lhs.y == rhs.y
+    }
+}
+extension Point: Hashable {
+    func hash(into hasher: inout Hasher) {
+        // Ignore distanceFromOrigin for hashing
+        hasher.combine(x)
+        hasher.combine(y)
+    }
+}
+
+</code></pre></div></div>
+
+<p><a href="https://github.com/apple/swift-evolution/blob/master/proposals/0207-containsOnly.md">SE-0207</a>集合新增<code class="language-plaintext highlighter-rouge">.allSatisfy</code>方法，判断是否所有元素都满足闭包内的条件</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// swift 3</span>
+<span class="c1">//判断所有数是否都是奇数</span>
+<span class="o">!</span><span class="n">nums</span><span class="o">.</span><span class="n">contains</span> <span class="p">{</span> <span class="o">!</span><span class="nf">isOdd</span><span class="p">(</span><span class="nv">$0</span><span class="p">)</span> <span class="p">}</span>
+<span class="c1">//swift 4.2</span>
+<span class="n">nums</span><span class="o">.</span><span class="nf">allSatisfy</span><span class="p">(</span><span class="n">isOdd</span><span class="p">)</span>
+</code></pre></div></div>
+<p><a href="https://github.com/apple/swift-evolution/blob/master/proposals/0143-conditional-conformances.md" title="Conditional conformances">SE-0143</a>条件一致性，现在可以在扩展(<code class="language-plaintext highlighter-rouge">extension</code>)中合成协议一致性，而不仅仅是在类型定义上（扩展必须仍然位于与类型定义相同的文件中），并且允许自动合成<code class="language-plaintext highlighter-rouge">Equatable</code>, <code class="language-plaintext highlighter-rouge">Hashable</code>, <code class="language-plaintext highlighter-rouge">Encodable</code>, 和 <code class="language-plaintext highlighter-rouge">Decodable</code>.</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kd">func</span> <span class="nf">isEncodable</span><span class="p">(</span><span class="n">_</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">value</span> <span class="k">is</span> <span class="kt">Encodable</span>
+<span class="p">}</span>
+<span class="k">let</span> <span class="nv">encodableArray</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+
+<span class="c1">//Swift 4.1</span>
+<span class="nf">isEncodable</span><span class="p">(</span><span class="n">encodableArray</span><span class="p">)</span> <span class="c1">// false</span>
+
+<span class="c1">//Swift 4.2</span>
+<span class="nf">isEncodable</span><span class="p">(</span><span class="n">encodableArray</span><span class="p">)</span> <span class="c1">// true</span>
+<span class="kd">struct</span> <span class="kt">NonEncodable</span> <span class="p">{}</span>
+<span class="k">let</span> <span class="nv">nonEncodableArray</span> <span class="o">=</span> <span class="p">[</span><span class="kt">NonEncodable</span><span class="p">(),</span> <span class="kt">NonEncodable</span><span class="p">()]</span>
+<span class="nf">isEncodable</span><span class="p">(</span><span class="n">nonEncodableArray</span><span class="p">)</span><span class="c1">// false 在不满足条件一致性条件时，动态查验不成功。</span>
+
+<span class="kd">enum</span> <span class="kt">Either</span><span class="o">&lt;</span><span class="kt">Left</span><span class="p">,</span> <span class="kt">Right</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="nf">left</span><span class="p">(</span><span class="kt">Left</span><span class="p">)</span>
+    <span class="k">case</span> <span class="nf">right</span><span class="p">(</span><span class="kt">Right</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">// 扩展后无需写具体实现，编译器自动合成</span>
+<span class="kd">extension</span> <span class="kt">Either</span><span class="p">:</span> <span class="kt">Equatable</span> <span class="k">where</span> <span class="kt">Left</span><span class="p">:</span> <span class="kt">Equatable</span><span class="p">,</span> <span class="kt">Right</span><span class="p">:</span> <span class="kt">Equatable</span> <span class="p">{}</span>
+<span class="kd">extension</span> <span class="kt">Either</span><span class="p">:</span> <span class="kt">Hashable</span> <span class="k">where</span> <span class="kt">Left</span><span class="p">:</span> <span class="kt">Hashable</span><span class="p">,</span> <span class="kt">Right</span><span class="p">:</span> <span class="kt">Hashable</span> <span class="p">{}</span>
+
+<span class="kt">Either</span><span class="o">&lt;</span><span class="kt">Int</span><span class="p">,</span> <span class="kt">String</span><span class="o">&gt;.</span><span class="nf">left</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span> <span class="o">==</span> <span class="kt">Either</span><span class="o">&lt;</span><span class="kt">Int</span><span class="p">,</span> <span class="kt">String</span><span class="o">&gt;.</span><span class="nf">left</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<p><a href="https://github.com/apple/swift-evolution/blob/master/proposals/0212-compiler-version-directive.md">SE-0212</a>新增编译器版本指令</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// swift 3</span>
+<span class="cp">#if swift(&gt;=4.1) || (swift(&gt;=3.3) &amp;&amp; !swift(&gt;=4.0))</span>
+<span class="c1">// Code targeting the Swift 4.1 compiler and above.</span>
+<span class="cp">#endif</span>
+
+<span class="cp">#if swift(&gt;=4.1.50) || (swift(&gt;=3.4) &amp;&amp; !swift(&gt;=4.0))</span>
+<span class="c1">// Code targeting the Swift 4.2 compiler and above.</span>
+<span class="cp">#endif</span>
+
+<span class="cp">#if swift(&gt;=5.0) || (swift(&gt;=4.1.50) &amp;&amp; !swift(&gt;=4.2)) || (swift(&gt;=3.5) &amp;&amp; !swift(&gt;=4.0))</span>
+<span class="c1">// Code targeting the Swift 5.0 compiler and above.</span>
+<span class="cp">#endif</span>
+
+<span class="c1">//swift4</span>
+<span class="cp">#if swift(&gt;=4.1) || (swift(&gt;=3.3) &amp;&amp; !swift(&gt;=4.0))</span>
+<span class="c1">// Code targeting the Swift 4.1 compiler and above.</span>
+<span class="c1">// 低版本编译器兼容代码.</span>
+<span class="cp">#endif</span>
+
+<span class="cp">#if compiler(&gt;=4.2)</span>
+<span class="c1">// Code targeting the Swift 4.2 compiler and above.</span>
+<span class="cp">#endif</span>
+
+<span class="cp">#if compiler(&gt;=5.0)</span>
+<span class="c1">// Code targeting the Swift 5.0 compiler and above.</span>
+<span class="cp">#endif</span>
+
+</code></pre></div></div>
+
+<p><a href="https://github.com/apple/swift-evolution/blob/master/proposals/0210-key-path-offset.md">SE-0210</a>添加<code class="language-plaintext highlighter-rouge">MemoryLayout&lt;T&gt;.offset(of:)</code>方法，返回一个指针地址偏移后的T类型的值</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// C语言</span>
+<span class="c1">// Layout of one of our vertex entries</span>
+<span class="kd">struct</span> <span class="kt">MyVertex</span> <span class="p">{</span>
+  <span class="n">float</span> <span class="n">position</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+  <span class="n">float</span> <span class="n">normal</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+  <span class="n">uint16_t</span> <span class="n">texcoord</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+<span class="p">};</span>
+
+<span class="kd">enum</span> <span class="kt">MyVertexAttribute</span> <span class="p">{</span> <span class="kt">Position</span><span class="p">,</span> <span class="kt">Normal</span><span class="p">,</span> <span class="kt">TexCoord</span> <span class="p">};</span>
+
+<span class="nf">glVertexAttribPointer</span><span class="p">(</span><span class="kt">Position</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="kt">GL_FLOAT</span><span class="p">,</span> <span class="kt">GL_FALSE</span><span class="p">,</span>
+                      <span class="nf">sizeof</span><span class="p">(</span><span class="kt">MyVertex</span><span class="p">),</span> <span class="p">(</span><span class="n">void</span><span class="o">*</span><span class="p">)</span><span class="nf">offsetof</span><span class="p">(</span><span class="kt">MyVertex</span><span class="p">,</span> <span class="n">position</span><span class="p">));</span>
+<span class="nf">glVertexAttribPointer</span><span class="p">(</span><span class="kt">Normal</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="kt">GL_FLOAT</span><span class="p">,</span> <span class="kt">GL_FALSE</span><span class="p">,</span>
+                      <span class="nf">sizeof</span><span class="p">(</span><span class="kt">MyVertex</span><span class="p">),</span> <span class="p">(</span><span class="n">void</span><span class="o">*</span><span class="p">)</span><span class="nf">offsetof</span><span class="p">(</span><span class="kt">MyVertex</span><span class="p">,</span> <span class="n">normal</span><span class="p">));</span>
+<span class="nf">glVertexAttribPointer</span><span class="p">(</span><span class="kt">TexCoord</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="kt">GL_UNSIGNED_BYTE</span><span class="p">,</span> <span class="kt">GL_TRUE</span><span class="p">,</span>
+                      <span class="nf">sizeof</span><span class="p">(</span><span class="kt">MyVertex</span><span class="p">),</span> <span class="p">(</span><span class="n">void</span><span class="o">*</span><span class="p">)</span><span class="nf">offsetof</span><span class="p">(</span><span class="kt">MyVertex</span><span class="p">,</span> <span class="n">texcoord</span><span class="p">));</span>
+                      
+<span class="c1">//swift 4.2 </span>
+<span class="kd">struct</span> <span class="kt">Point</span> <span class="p">{</span>
+  <span class="k">var</span> <span class="nv">x</span><span class="p">,</span> <span class="nv">y</span><span class="p">:</span> <span class="kt">Double</span>
+<span class="p">}</span>
+
+<span class="kd">struct</span> <span class="kt">Size</span> <span class="p">{</span>
+  <span class="k">var</span> <span class="nv">w</span><span class="p">,</span> <span class="nv">h</span><span class="p">:</span> <span class="kt">Double</span>
+
+  <span class="k">var</span> <span class="nv">area</span><span class="p">:</span> <span class="kt">Double</span> <span class="p">{</span> <span class="k">return</span> <span class="n">w</span><span class="o">*</span><span class="n">h</span> <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">struct</span> <span class="kt">Rect</span> <span class="p">{</span>
+  <span class="k">var</span> <span class="nv">origin</span><span class="p">:</span> <span class="kt">Point</span>
+  <span class="k">var</span> <span class="nv">size</span><span class="p">:</span> <span class="kt">Size</span>
+<span class="p">}</span>
+
+<span class="kt">MemoryLayout</span><span class="o">&lt;</span><span class="kt">Rect</span><span class="o">&gt;.</span><span class="nf">offset</span><span class="p">(</span><span class="nv">of</span><span class="p">:</span> <span class="p">\</span><span class="o">.</span><span class="n">origin</span><span class="o">.</span><span class="n">x</span><span class="p">)</span> <span class="c1">// =&gt; 0</span>
+<span class="kt">MemoryLayout</span><span class="o">&lt;</span><span class="kt">Rect</span><span class="o">&gt;.</span><span class="nf">offset</span><span class="p">(</span><span class="nv">of</span><span class="p">:</span> <span class="p">\</span><span class="o">.</span><span class="n">origin</span><span class="o">.</span><span class="n">y</span><span class="p">)</span> <span class="c1">// =&gt; 8</span>
+<span class="kt">MemoryLayout</span><span class="o">&lt;</span><span class="kt">Rect</span><span class="o">&gt;.</span><span class="nf">offset</span><span class="p">(</span><span class="nv">of</span><span class="p">:</span> <span class="p">\</span><span class="o">.</span><span class="n">size</span><span class="o">.</span><span class="n">w</span><span class="p">)</span> <span class="c1">// =&gt; 16</span>
+<span class="kt">MemoryLayout</span><span class="o">&lt;</span><span class="kt">Rect</span><span class="o">&gt;.</span><span class="nf">offset</span><span class="p">(</span><span class="nv">of</span><span class="p">:</span> <span class="p">\</span><span class="o">.</span><span class="n">size</span><span class="o">.</span><span class="n">h</span><span class="p">)</span> <span class="c1">// =&gt; 24</span>
+<span class="kt">MemoryLayout</span><span class="o">&lt;</span><span class="kt">Rect</span><span class="o">&gt;.</span><span class="nf">offset</span><span class="p">(</span><span class="nv">of</span><span class="p">:</span> <span class="p">\</span><span class="o">.</span><span class="n">size</span><span class="o">.</span><span class="n">area</span><span class="p">)</span> <span class="c1">// =&gt; nil</span>
+
+</code></pre></div></div>
+<p><a href="https://github.com/apple/swift-evolution/blob/master/proposals/0205-withUnsafePointer-for-lets.md">SE-0205</a>只读属性<code class="language-plaintext highlighter-rouge">withUnsafePointer(to:_:)</code> 和 <code class="language-plaintext highlighter-rouge">withUnsafeBytes(of:_:)</code> 顶层方法扩展</p>
+
+<p><a href="https://github.com/apple/swift-evolution/blob/master/proposals/0196-diagnostic-directives.md">SE-0196</a>编译器指令<code class="language-plaintext highlighter-rouge">#warning</code>和<code class="language-plaintext highlighter-rouge">#error</code></p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// swift4.2</span>
+ <span class="cp">#warning("TODO: missing implementation")//编译器警告</span>
+ <span class="cp">#error("This playground requires UIKit or AppKit")//编译失败报错</span>
+</code></pre></div></div>
+
+<p><a href="https://github.com/apple/swift-evolution/blob/master/proposals/0195-dynamic-member-lookup.md">SE-0195</a>动态成员查找，通过<code class="language-plaintext highlighter-rouge">@dynamicMemberLookup</code>声明属性 ，以获取 Python等语言的支持</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> // Python
+ class Dog:
+    def __init__(self, name):
+        self.name = name
+        self.tricks = []    # creates a new empty list for each dog
+    def add_trick(self, trick):
+        self.tricks.append(trick)
+        return self
+ ----------------------------------------       
+  //swift 4.2
+  // import DogModule
+  // import DogModule.Dog as Dog    // an alternate
+  let Dog = Python.import("DogModule.Dog")
+  let dog = Dog("Brianna")
+  dog.add_trick("Roll over")
+  let cuteDog = Dog("Kaylee").add_trick("snore")
+</code></pre></div></div>
+
+<p><a href="https://github.com/apple/swift-evolution/blob/master/proposals/0194-derived-collection-of-enum-cases.md">SE-0194</a>遍历普通枚举值</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">enum</span> <span class="kt">Terrain</span><span class="p">:</span> <span class="kt">CaseIterable</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="n">water</span>
+    <span class="k">case</span> <span class="n">forest</span>
+    <span class="k">case</span> <span class="n">desert</span>
+    <span class="k">case</span> <span class="n">road</span>
+<span class="p">}</span>
+
+<span class="kt">Terrain</span><span class="o">.</span><span class="n">allCases</span>
+<span class="kt">Terrain</span><span class="o">.</span><span class="n">allCases</span><span class="o">.</span><span class="n">count</span>
+
+</code></pre></div></div>
+<p>使用<code class="language-plaintext highlighter-rouge">CaseIterable</code>后，枚举可以通过<code class="language-plaintext highlighter-rouge">.allCases</code>获取所有枚举值的数组</p>
+
+<p><a href="https://github.com/apple/swift-evolution/blob/master/proposals/0193-cross-module-inlining-and-specialization.md">SE-0193</a>模块间调用， 用<code class="language-plaintext highlighter-rouge">@inlinable</code> and <code class="language-plaintext highlighter-rouge">@usableFromInline</code>声明公共接口</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Inside CollectionAlgorithms module:</span>
+<span class="kd">extension</span> <span class="kt">Sequence</span> <span class="k">where</span> <span class="kt">Element</span><span class="p">:</span> <span class="kt">Equatable</span> <span class="p">{</span>
+    <span class="c1">/// Returns `true` iff all elements in the sequence are equal.</span>
+    <span class="kd">@inlinable</span>
+    <span class="kd">public</span> <span class="kd">func</span> <span class="nf">allEqual</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Bool</span> <span class="p">{</span>
+        <span class="k">var</span> <span class="nv">iterator</span> <span class="o">=</span> <span class="nf">makeIterator</span><span class="p">()</span>
+        <span class="k">guard</span> <span class="k">let</span> <span class="nv">first</span> <span class="o">=</span> <span class="n">iterator</span><span class="o">.</span><span class="nf">next</span><span class="p">()</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="kc">true</span>
+        <span class="p">}</span>
+        <span class="k">while</span> <span class="k">let</span> <span class="nv">next</span> <span class="o">=</span> <span class="n">iterator</span><span class="o">.</span><span class="nf">next</span><span class="p">()</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="n">first</span> <span class="o">!=</span> <span class="n">next</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="kc">false</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="kc">true</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="nf">allEqual</span><span class="p">()</span>
+<span class="kt">Array</span><span class="p">(</span><span class="nv">repeating</span><span class="p">:</span> <span class="mi">42</span><span class="p">,</span> <span class="nv">count</span><span class="p">:</span> <span class="mi">1000</span><span class="p">)</span><span class="o">.</span><span class="nf">allEqual</span><span class="p">()</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="nf">allEqual</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><a href="https://github.com/apple/swift-evolution/blob/master/proposals/0054-abolish-iuo.md">SE-0054</a>废除隐式可选类型</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="nv">x</span><span class="p">:</span> <span class="kt">Int</span><span class="o">!</span> <span class="o">=</span> <span class="mi">5</span>   <span class="c1">//x:Int！</span>
+<span class="k">let</span> <span class="nv">y</span> <span class="o">=</span> <span class="n">x</span>         <span class="c1">//y:Int?</span>
+<span class="k">let</span> <span class="nv">z</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">0</span>     <span class="c1">//z:Int</span>
+</code></pre></div></div>
+<p><code class="language-plaintext highlighter-rouge">X</code>在使用时被强制解包为Int类型，<code class="language-plaintext highlighter-rouge">！</code>声明的类型表示可选类型，并且告知编译器可以强制解包<code class="language-plaintext highlighter-rouge">[Int!]</code>和<code class="language-plaintext highlighter-rouge">&lt;T!&gt;</code>等类型将不再可用，类似的自动类型推导也将提示修改为指定类型</p>
+
+<h2 id="xcode-10更新">###XCode 10更新</h2>
+<ol>
+  <li>多行编辑：<code class="language-plaintext highlighter-rouge">control</code> + <code class="language-plaintext highlighter-rouge">shift</code> +鼠标单击
+    <blockquote>
+      <p>多行编辑在Mac OS10.14中可以在众多编辑器中使用如Sublime Text3中可以用<code class="language-plaintext highlighter-rouge">command</code>+鼠标单击 点击多行编辑（支持多行分别复制粘贴）
+<img src="https://upload-images.jianshu.io/upload_images/4066843-87e17abf49152425.gif?imageMogr2/auto-orient/strip" alt="linesedit.gif" /></p>
+    </blockquote>
+  </li>
+  <li>
+    <p>为快速查看弹出窗口添加了导出选项，用于数据类型，例如NSData
+<img src="https://upload-images.jianshu.io/upload_images/4066843-670d6ecfa885f9af.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="屏幕快照 2018-09-19 上午11.04.52.png" /></p>
+  </li>
+  <li>
+    <p>现在，新创建的<code class="language-plaintext highlighter-rouge">schemes</code>默认由Xcode项目的所有用户共享。要创建个人方案，请取消选中<code class="language-plaintext highlighter-rouge">Manage Schemes</code>表中的<code class="language-plaintext highlighter-rouge">Shared</code>复选框</p>
+  </li>
+  <li>
+    <p>打开Library时按住Option键将使其在手动关闭之前保持可见，而不是在每次使用后自动关闭。(使用<code class="language-plaintext highlighter-rouge">command</code>+<code class="language-plaintext highlighter-rouge">shift</code>+<code class="language-plaintext highlighter-rouge">M</code>/<code class="language-plaintext highlighter-rouge">L</code>打开媒体库或UI组件库，拖去UI组件时按住Option壳使弹出视图不消失)
+<img src="https://upload-images.jianshu.io/upload_images/4066843-6712f7fc0b0c1824.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="屏幕快照 2018-09-19 上午11.24.25.png" /></p>
+  </li>
+  <li>xcode的10增加了对C ++ 17个头部的支持<any>，<optional>和<variant>。（39271859）</variant></optional></any></li>
+  <li>命名颜色现在可以象征性地引用系统颜色。（39196638）</li>
+  <li>libstdc ++已在xcode10弃用，C ++项目现在必须迁移到libc++，开发人员还应审核项目依赖项，以删除对libstdc++的引用</li>
+  <li>Libgcc已经过时了。Xcode 10无法再构建具有macOS 10.4和10.5部署目标的应用程序。（42818150,38035243）</li>
+  <li>已删除对Subversion(SVN)的支持,目前只支持Git</li>
+  <li>Xcode 10是最后一个支持Swift 3的版本。通过打开项目并选择Edit&gt; Convert&gt; To Current Swift Syntax …将项目从Swift 3代码迁移到Swift 4.2语法…（43101816）</li>
+  <li>macOS 10.14 SDK不再包含对编译32位应用程序的支持。如果开发人员需要为i386编译，则需要Xcode 9.4或更早版本。</li>
+  <li>调试工具增强
+更多信息请阅读参考文档中的《Xcode 10 Release Notes》</li>
+</ol>
+
+<p>###XCode10已知BUG</p>
+<ol>
+  <li>打开存储在iCloud Drive中的Xcode项目和工作空间，或更改存储在iCloud Drive中的打开的工作空间或项目的源控制分支，可能会导致Xcode挂起。</li>
+  <li>运行iOS 12的设备可能无法从Xcode的设备窗口获取请求的屏幕截图。（42873539）<br />
+<strong>解决方法：</strong>在设备上截取屏幕截图。</li>
+  <li>使用以前版本的Xcode构建的Xcode 10运行WatchKit应用程序可能会出现安装错误“WatchKit应用程序具有无效的存根可执行文件”。（40567857）<br />
+<strong>解决方法：</strong>清理构建文件夹并再次运行应用程序。</li>
+  <li>如果Xcode尚未连接完成任何开发设备，则Instruments可能无法启动。（43066159）<br />
+<strong>解决方法：</strong>等待Xcode的设备设置阶段完成，然后打开Instruments。</li>
+  <li>Instruments可能无法在iOS模拟器中配置库或框架单元测试</li>
+  <li>在playground中切换到非默认工具链可能会导致Xcode崩溃。（43659135）<br />
+<strong>解决方法：</strong>切换回默认工具链，然后打开playground。</li>
+  <li>模拟设备中的macOS粘贴板和粘贴板之间的同步有时会失败。（36036706,38052949,41916640）</li>
+  <li>操作系统可能需要几分钟才能在模拟器中首次启动。（40535421）</li>
+  <li>Xcode不支持ed25519加密的SSH密钥对。（40912136）<br />
+<strong>解决方法：</strong>使用使用不同加密形式的SSH密钥对。</li>
+</ol>
+
+<blockquote>
+  <p>###参考文档
+1.<a href="https://github.com/ole/whats-new-in-swift-4-2">whats-new-in-swift-4-2</a>
+2.<a href="https://github.com/apple/swift/blob/master/CHANGELOG.md">swift change Log</a>
+3.<a href="https://swift.org/blog/swift-4-2-released/">swift-4-2-released</a>
+4.<a href="https://developer.apple.com/documentation/xcode_release_notes/xcode_10_release_notes">Xcode 10 Release Notes</a></p>
+</blockquote>
+
+:ET

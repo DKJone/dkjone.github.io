@@ -1,0 +1,91 @@
+I"0<h1 id="dkloginbutton">DKLoginButton</h1>
+<p>English|<a href="https://github.com/DKJone/DKLoginButton/blob/master/README_cn.md">中文文档</a> <br />
+A login button with Cool animation and easy to use</p>
+
+<p><a href="https://developer.apple.com/iphone/index.action"><img src="http://img.shields.io/badge/platform-ios-blue.svg?style=flat" alt="Platform" /></a>
+<a href="https://developer.apple.com/swift"><img src="http://img.shields.io/badge/language-swift-brightgreen.svg?style=flat" alt="Language" /></a>
+<a href="http://mit-license.org"><img src="http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat" alt="License" /></a>
+<a href=""><img src="https://img.shields.io/cocoapods/v/TKSubmitTransition.svg" alt="CocoaPods" /></a></p>
+
+<h1 id="version">Version</h1>
+<p><strong>Swift4.0</strong><br />
+<a href="https://github.com/DKJone/DKLoginButton/tree/swift3.2">Swift3.2</a><br />
+<a href="https://github.com/DKJone/DKLoginButton/tree/swift2.0">Swift2.0</a></p>
+
+<p>Inspiration from <a href="https://dribbble.com/shots/1945593-Login-Home-Screen">Dribbble</a></p>
+
+<p>A login button with animation effect is implemented in this project, which is commonly used for <strong>Login/Logoff</strong> and other operations</p>
+
+<p>As you can see the GIF animated demo below, you can set the button to a specific state after the effect is rotated (failure and success correspond to different animations)</p>
+
+<p>These effects are encapsulated in the same class and can be easily used as long as the button inherits from this class</p>
+
+<h1 id="demo">Demo</h1>
+<p><img src="https://d13yacurqjgara.cloudfront.net/users/62319/screenshots/1945593/shot.gif" alt="Demo GIF Animation" title="Demo GIF Animation" /></p>
+
+<p><img src="https://raw.githubusercontent.com/wwdc14/TKSubmitTransitionObjective-C/master/Demo.gif" alt="image" /></p>
+<h1 id="cocoapods-recommended">CocoaPods Recommended</h1>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pod 'DKLoginButton'
+</code></pre></div></div>
+
+<h1 id="file-add">File add</h1>
+<p>Just download the Demo and drag the <code class="language-plaintext highlighter-rouge">DKButton </code> folder into your project</p>
+
+<h1 id="usage">Usage</h1>
+
+<h2 id="this-is-a-subclass-of-the-uibutton--that-initializes-and-sets-the-related-properties-before-using">This is a subclass of the UIButton  that initializes and sets the related properties before using</h2>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="k">override</span> <span class="kd">func</span> <span class="nf">viewDidLoad</span><span class="p">()</span> <span class="p">{</span>
+	<span class="k">super</span><span class="o">.</span><span class="nf">viewDidLoad</span><span class="p">()</span>
+	<span class="c1">// set backgrounds</span>
+	<span class="kt">UIApplication</span><span class="o">.</span><span class="nf">sharedApplication</span><span class="p">()</span><span class="o">.</span><span class="nf">setStatusBarStyle</span><span class="p">(</span><span class="o">.</span><span class="kt">LightContent</span><span class="p">,</span> <span class="nv">animated</span><span class="p">:</span> <span class="kc">false</span><span class="p">)</span>
+	<span class="k">let</span> <span class="nv">bg</span> <span class="o">=</span> <span class="kt">UIImageView</span><span class="p">(</span><span class="nv">image</span><span class="p">:</span> <span class="kt">UIImage</span><span class="p">(</span><span class="nv">named</span><span class="p">:</span> <span class="s">"Login"</span><span class="p">))</span>
+	<span class="n">bg</span><span class="o">.</span><span class="n">frame</span> <span class="o">=</span> <span class="k">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">frame</span>
+	<span class="k">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="nf">addSubview</span><span class="p">(</span><span class="n">bg</span><span class="p">)</span>
+	<span class="c1">// init button</span>
+	<span class="k">var</span> <span class="nv">btn</span> <span class="o">=</span> <span class="kt">DKTransitionButton</span><span class="p">(</span><span class="nv">frame</span><span class="p">:</span> <span class="kt">CGRect</span><span class="p">(</span><span class="nv">x</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">y</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">width</span><span class="p">:</span> <span class="k">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">size</span><span class="o">.</span><span class="n">width</span> <span class="o">-</span> <span class="mi">64</span><span class="p">,</span> <span class="nv">height</span><span class="p">:</span> <span class="mi">44</span><span class="p">))</span>
+	<span class="n">btn</span><span class="o">.</span><span class="n">backgroundColor</span> <span class="o">=</span> <span class="kt">UIColor</span><span class="p">(</span><span class="nv">red</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nv">green</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">blue</span><span class="p">:</span> <span class="mf">128.0</span> <span class="o">/</span> <span class="mf">255.0</span><span class="p">,</span> <span class="nv">alpha</span><span class="p">:</span> <span class="mi">1</span><span class="p">)</span>
+	<span class="n">btn</span><span class="o">.</span><span class="n">center</span> <span class="o">=</span> <span class="k">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">center</span>
+	<span class="n">btn</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">bottom</span> <span class="o">=</span> <span class="k">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">height</span> <span class="o">-</span> <span class="mi">60</span>
+	<span class="n">btn</span><span class="o">.</span><span class="nf">setTitle</span><span class="p">(</span><span class="s">"Sign in"</span><span class="p">,</span> <span class="nv">forState</span><span class="p">:</span> <span class="o">.</span><span class="kt">Normal</span><span class="p">)</span>
+	<span class="n">btn</span><span class="o">.</span><span class="n">titleLabel</span><span class="p">?</span><span class="o">.</span><span class="n">font</span> <span class="o">=</span> <span class="kt">UIFont</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"HelveticaNeue-Light"</span><span class="p">,</span> <span class="nv">size</span><span class="p">:</span> <span class="mi">14</span><span class="p">)</span>
+	<span class="n">btn</span><span class="o">.</span><span class="nf">addTarget</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="nv">action</span><span class="p">:</span> <span class="kd">#selector(</span><span class="nf">onTapButton(_:)</span><span class="kd">)</span><span class="p">,</span> <span class="nv">forControlEvents</span><span class="p">:</span> <span class="kt">UIControlEvents</span><span class="o">.</span><span class="kt">TouchUpInside</span><span class="p">)</span>
+	<span class="n">btn</span><span class="o">.</span><span class="n">spiner</span><span class="o">.</span><span class="n">spinnerColor</span> <span class="o">=</span> <span class="kt">UIColor</span><span class="o">.</span><span class="nf">blackColor</span><span class="p">()</span>
+	<span class="k">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="nf">addSubview</span><span class="p">(</span><span class="n">btn</span><span class="p">)</span>
+	<span class="k">self</span><span class="o">.</span><span class="n">view</span><span class="o">.</span><span class="nf">bringSubviewToFront</span><span class="p">(</span><span class="n">canlogin</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="how-to-use-animations">How to use animations</h2>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="kd">@IBAction</span> <span class="kd">func</span> <span class="nf">onTapButton</span><span class="p">(</span><span class="nv">button</span><span class="p">:</span> <span class="kt">DKTransitionButton</span><span class="p">)</span> <span class="p">{</span>
+	<span class="c1">// Start loading animations</span>
+	<span class="n">button</span><span class="o">.</span><span class="nf">startLoadingAnimation</span><span class="p">()</span>
+
+	<span class="k">if</span> <span class="k">self</span><span class="o">.</span><span class="n">canlogin</span><span class="o">.</span><span class="n">on</span> <span class="p">{</span>
+	    <span class="c1">// Success, interface switch</span>
+	<span class="n">button</span><span class="o">.</span><span class="nf">startSwitchAnimation</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="p">{</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="p">()</span> <span class="k">in</span>
+	<span class="k">let</span> <span class="nv">secondVC</span> <span class="o">=</span> <span class="kt">UIStoryboard</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="s">"Main"</span><span class="p">,</span> <span class="nv">bundle</span><span class="p">:</span> <span class="kc">nil</span><span class="p">)</span><span class="o">.</span><span class="nf">instantiateViewControllerWithIdentifier</span><span class="p">(</span><span class="s">"SecondViewController"</span><span class="p">)</span>
+	<span class="n">secondVC</span><span class="o">.</span><span class="n">transitioningDelegate</span> <span class="o">=</span> <span class="k">self</span>
+	<span class="k">self</span><span class="o">.</span><span class="nf">presentViewControllerWithDKAnimation</span><span class="p">(</span><span class="n">secondVC</span><span class="p">,</span> <span class="nv">animated</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kc">nil</span><span class="p">)</span>
+	<span class="p">})</span>
+	<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    	<span class="c1">// Failed, returned and prompted</span>
+	    <span class="n">button</span><span class="o">.</span><span class="nf">startShakeAnimation</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="p">{</span>
+	    <span class="c1">// Prompt for logon failure</span>
+	    <span class="nf">print</span><span class="p">(</span><span class="s">"badend"</span><span class="p">)</span>
+	    <span class="p">})</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<h2 id="the-animation-return-to-the-loginpage">The animation Return to the loginPage</h2>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">@IBAction</span> <span class="kd">func</span> <span class="nf">onTapScreen</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">button</span><span class="o">.</span><span class="nf">moveToCenterExpand</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+	    <span class="k">self</span><span class="o">.</span><span class="nf">dismissViewControllerAnimated</span><span class="p">(</span><span class="kc">false</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kc">nil</span><span class="p">)</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+:ET

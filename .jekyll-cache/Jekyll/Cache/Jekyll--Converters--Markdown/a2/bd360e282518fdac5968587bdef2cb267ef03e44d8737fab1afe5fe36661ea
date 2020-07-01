@@ -1,0 +1,136 @@
+I"c:<h1 id="xcode常见错误处理">xcode常见错误处理</h1>
+<p>更加详细的内容会同步更新在GitHub项目<a href="https://github.com/DKJone/ios-Tips">ios-Tips</a>中</p>
+
+<h1 id="xcode-在ocswift混编时报错错误内容">Xcode 在OC、swift混编时报错错误内容</h1>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>missing required module 'CommonCrypto'
+</code></pre></div></div>
+<h4 id="出错原因">出错原因：</h4>
+<p><code class="language-plaintext highlighter-rouge">
+由于苹果的C语言库在swift中没有对应的framework，所以OC框架在使用c语言库后作为外部框架导入后找不到原c语言框架
+</code></p>
+<h4 id="解决方法">解决方法</h4>
+<p><code class="language-plaintext highlighter-rouge">
+新建对应的虚拟Framework（在此使用脚本自动生成模块并映射正确的Xcode/SDK路径），然后加入到项目依赖中，护体方法如下
+</code></p>
+<ol>
+  <li>选择xcode工程文件</li>
+  <li>选择<code class="language-plaintext highlighter-rouge">info</code>选项</li>
+  <li>添加<code class="language-plaintext highlighter-rouge">target</code>-&gt;<code class="language-plaintext highlighter-rouge">Aggregate</code></li>
+  <li>添加Script将如下脚本粘贴到图示处
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> <span class="s2">"</span><span class="k">${</span><span class="nv">BUILT_PRODUCTS_DIR</span><span class="k">}</span><span class="s2">/CommonCryptoModuleMap"</span>
+<span class="nb">cat</span> <span class="o">&lt;&lt;</span><span class="no">EOF</span><span class="sh"> &gt; "</span><span class="k">${</span><span class="nv">BUILT_PRODUCTS_DIR</span><span class="k">}</span><span class="sh">/CommonCryptoModuleMap/module.modulemap"
+module CommonCrypto [system] {
+ header "</span><span class="k">${</span><span class="nv">SDKROOT</span><span class="k">}</span><span class="sh">/usr/include/CommonCrypto/CommonCrypto.h"
+ export *
+}
+</span><span class="no">EOF
+</span></code></pre></div>    </div>
+  </li>
+  <li>选择<code class="language-plaintext highlighter-rouge">Build Phases</code>选项，将CommonCrypto框架添加到<code class="language-plaintext highlighter-rouge">Target Dependencies</code><br />
+<img src="https://github.com/DKJone/ios-Tips/tree/master/images/img_01.png" alt="image" />
+<img src="https://github.com/DKJone/ios-Tips/tree/master/images/img_02.png" alt="image" /></li>
+</ol>
+
+<h1 id="blydatamanager错误导致app在发布后ios93一下系统异常崩溃">BLYDataManager错误导致app在发布后IOS9.3一下系统异常崩溃</h1>
+
+<p>ios ipa测试时没任何问题但是上传AppStore后会在iOS 9上出现崩溃
+下面是腾讯bugly给的崩溃信息</p>
+<div class="language-objc highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">BLYDataManager</span> <span class="nf">persistData</span><span class="p">:</span><span class="nf">ofType</span><span class="p">:</span><span class="n">enableNotifications</span><span class="o">:</span><span class="n">withCompletionBlock</span><span class="o">:</span><span class="p">]</span><span class="n">_block_invoke</span>
+<span class="n">EXC_BAD_ACCESS</span>
+
+</code></pre></div></div>
+<h4 id="出错原因-1">出错原因：</h4>
+<blockquote>
+  <h3 id="在xcode8中如果你的图片资源文件里有16位图或者图片显示模式为p3并且deployment-target是ios93以下的就会出现这个问题话说我公司的项目里面就出现了一个小按钮导致了这次崩溃不知道设计师是怎么弄出来的这个特殊图片如果你的app需要支持wide-color-functionality那你就必须设置deployment-target为ios93以上如果你的app不需要支持wide-color-functionality并且你希望兼容ios老版本那么你需要将所有16-bit-or-p3-assets的图片转换为8-bit-srgb-assets">在Xcode8中，如果你的图片资源文件里有16位图或者图片显示模式为P3，并且Deployment Target是iOS9.3以下的就会出现这个问题。（话说我公司的项目里面就出现了一个小按钮，导致了这次崩溃，不知道设计师是怎么弄出来的这个特殊图片…）如果你的App需要支持wide color functionality，那你就必须设置Deployment Target为iOS9.3以上。如果你的APP不需要支持wide color functionality并且你希望兼容iOS老版本，那么你需要将所有16-bit or P3 assets的图片转换为8-bit sRGB assets</h3>
+</blockquote>
+
+<h4 id="解决方法-1">解决方法</h4>
+<ol>
+  <li>打一个ipa包，解压你的应用的ipa包，进入到你应用的Playload文件夹。</li>
+  <li>用find命令定位到Assets.car文件
+find . -name ‘Assets.car’</li>
+  <li>使用 assetutil 命令导出图片的信息存储到Assets.json文件中
+    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>xcrun <span class="nt">--sdk</span> iphoneos assetutil <span class="nt">--info</span> <span class="o">{</span>Assets.car路径<span class="o">}</span> <span class="o">&gt;</span> /tmp/Assets.json
+//示例：
+<span class="nb">sudo </span>xcrun <span class="nt">--sdk</span> iphoneos assetutil <span class="nt">--info</span> ./abc.app/Assets.car <span class="o">&gt;</span> /tmp/Assets.json
+</code></pre></div>    </div>
+  </li>
+  <li>打开刚才生成的Assets.json文件，查找含有<code class="language-plaintext highlighter-rouge">"DisplayGamut" : "P3"</code>的内容。这个对应的Name就是出现问题的图片了。
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>open /tmp/Assets.json
+</code></pre></div>    </div>
+    <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+ </span><span class="nl">"Compression"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"lzfse"</span><span class="p">,</span><span class="w">
+ </span><span class="nl">"BitsPerSample"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span><span class="w">
+ </span><span class="nl">"LayoutDirection"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"0 - Horizontal"</span><span class="p">,</span><span class="w">
+ </span><span class="nl">"AssetType"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Image"</span><span class="p">,</span><span class="w">
+ </span><span class="nl">"ColorModel"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"RGB"</span><span class="p">,</span><span class="w">
+ </span><span class="nl">"Name"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"CRM_msg_unread"</span><span class="p">,</span><span class="w">
+ </span><span class="nl">"PixelWidth"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">90</span><span class="p">,</span><span class="w">
+ </span><span class="nl">"Graphics"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"GLES2,0"</span><span class="p">,</span><span class="w">
+ </span><span class="nl">"Subtype"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+ </span><span class="nl">"PixelHeight"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">90</span><span class="p">,</span><span class="w">
+ </span><span class="nl">"SizeClass Horizontal"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"universal"</span><span class="p">,</span><span class="w">
+ </span><span class="nl">"EdgeInsets"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"top:0 left:0 bottom:0 right:0"</span><span class="p">,</span><span class="w">
+ </span><span class="nl">"Scale"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+ </span><span class="nl">"Memory"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"512MB"</span><span class="p">,</span><span class="w">
+ </span><span class="nl">"Opaque"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+ </span><span class="nl">"DisplayGamut"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"P3"</span><span class="p">,</span><span class="w">
+ </span><span class="nl">"Idiom"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"universal"</span><span class="p">,</span><span class="w">
+ </span><span class="nl">"Encoding"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"ARGB-16"</span><span class="p">,</span><span class="w">
+ </span><span class="nl">"Image Type"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"kCoreThemeOnePartScale"</span><span class="p">,</span><span class="w">
+ </span><span class="nl">"SizeClass Vertical"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"universal"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span></code></pre></div>    </div>
+  </li>
+  <li>找到对应的图片，使用mac自带的预览打开，编辑图片后保存就可以将图片保存成正确的格式</li>
+  <li>除了使用上面的方法，还可以使用bash script直接处理所有图片为正确格式，这样我们就不用去定位是哪个图片的问题了，或许更方便一些
+    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+<span class="nv">DIRECTORY</span><span class="o">=</span><span class="nv">$1</span>
+<span class="nb">echo</span> <span class="s2">"------------------------------"</span>
+<span class="nb">echo</span> <span class="s2">"Passed Resources with xcassets folder argument is &lt;</span><span class="nv">$DIRECTORY</span><span class="s2">&gt;"</span>
+<span class="nb">echo</span> <span class="s2">"------------------------------"</span>
+<span class="nb">echo</span> <span class="s2">"Processing asset:"</span>
+<span class="nv">XSAASSETSD</span><span class="o">=</span><span class="s2">"</span><span class="si">$(</span>find <span class="s2">"</span><span class="nv">$DIRECTORY</span><span class="s2">"</span> <span class="nt">-name</span> <span class="s1">'*.xcassets'</span><span class="si">)</span><span class="s2">"</span>
+<span class="k">for </span>xcasset <span class="k">in</span> <span class="nv">$XSAASSETSD</span>
+<span class="k">do
+ </span><span class="nb">echo</span> <span class="s2">"---</span><span class="nv">$xcasset</span><span class="s2">"</span>
+ <span class="nv">IMAGESETS</span><span class="o">=</span><span class="s2">"</span><span class="si">$(</span>find <span class="s2">"</span><span class="nv">$xcasset</span><span class="s2">"</span> <span class="nt">-name</span> <span class="s1">'*.imageset'</span><span class="si">)</span><span class="s2">"</span>
+ <span class="k">for </span>imageset <span class="k">in</span> <span class="nv">$IMAGESETS</span>
+ <span class="k">do
+     </span><span class="nb">echo</span> <span class="s2">"------</span><span class="nv">$imageset</span><span class="s2">"</span>
+     <span class="nv">FILES</span><span class="o">=</span><span class="s2">"</span><span class="si">$(</span>find <span class="s2">"</span><span class="nv">$imageset</span><span class="s2">"</span> <span class="nt">-name</span> <span class="s1">'*.png'</span><span class="si">)</span><span class="s2">"</span>
+     <span class="k">for </span>file <span class="k">in</span> <span class="nv">$FILES</span> 
+     <span class="k">do
+         </span><span class="nb">echo</span> <span class="s2">"---------</span><span class="nv">$file</span><span class="s2">"</span>
+         sips <span class="nt">-m</span> <span class="s2">"/System/Library/Colorsync/Profiles/sRGB Profile.icc"</span> <span class="nv">$file</span> <span class="nt">--out</span> <span class="nv">$file</span>
+     <span class="k">done
+ done
+done
+</span><span class="nb">echo</span> <span class="s2">"------------------------------"</span>
+<span class="nb">echo</span> <span class="s2">"script successfully finished"</span>
+<span class="nb">echo</span> <span class="s2">"------------------------------"</span>
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h1 id="ipad-alertcontroller崩溃">ipad alertController崩溃</h1>
+
+<p>同样的 UIAlertController 在iPhone上运行时正常，而切换到iPad上后发生崩溃</p>
+
+<h4 id="出错原因-2">出错原因：</h4>
+<blockquote>
+  <h3 id="在ipad上actionsheet会被以popover的形式显示出来它衣服在当前页面的某一个组件上因为必须指定一个sourceview用于指定actionsheet的依附点在这个空间的周围被弹出同时还应指定一个sourcerect用于指定他被包含在哪一片区域内">在iPad上，ActionSheet会被以popover的形式显示出来，它衣服在当前页面的某一个组件上，因为必须指定一个sourceView用于指定ActionSheet的依附点（在这个空间的周围被弹出），同时还应指定一个sourceRect用于指定他被包含在哪一片区域内</h3>
+</blockquote>
+
+<h4 id="解决方法-2">解决方法</h4>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//ipad使用，不加ipad上会崩溃</span>
+        <span class="k">if</span> <span class="k">let</span> <span class="nv">popoverController</span> <span class="o">=</span> <span class="n">alertController</span><span class="o">.</span><span class="n">popoverPresentationController</span> <span class="p">{</span>
+            <span class="n">popoverController</span><span class="o">.</span><span class="n">sourceView</span> <span class="o">=</span> <span class="n">sender</span>
+            <span class="n">popoverController</span><span class="o">.</span><span class="n">sourceRect</span> <span class="o">=</span> <span class="n">sender</span><span class="o">.</span><span class="n">bounds</span>
+        <span class="p">}</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>注意：当你把一个Action的ActionStyle设置为cancel的时候，iPad将不会显示这个Action</p>
+</blockquote>
+:ET

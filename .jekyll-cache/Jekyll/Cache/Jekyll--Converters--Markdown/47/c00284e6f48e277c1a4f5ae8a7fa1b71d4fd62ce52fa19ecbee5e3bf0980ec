@@ -1,0 +1,90 @@
+I"�1<h1 id="swift代码优化">swift代码优化</h1>
+<p>更加详细的内容会同步更新在GitHub项目<a href="https://github.com/DKJone/ios-Tips">ios-Tips</a>中</p>
+
+<h1 id="影响编译速度的代码">影响编译速度的代码</h1>
+<blockquote>
+  <p>测试编译速度可已使用该<a href="https://github.com/RobertGummesson/BuildTimeAnalyzer-for-Xcode">工具</a></p>
+</blockquote>
+
+<h5 id="1自动类型推导的代码">1.自动类型推导的代码</h5>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">var</span> <span class="nv">model</span> <span class="p">:</span> <span class="kt">UILabel</span><span class="p">?</span>
+<span class="k">var</span> <span class="nv">cat</span> <span class="p">:</span> <span class="kt">String</span><span class="p">?</span>
+<span class="k">var</span> <span class="nv">name</span> <span class="p">:</span> <span class="kt">String</span><span class="p">?</span>
+<span class="k">var</span> <span class="nv">number</span> <span class="p">:</span> <span class="kt">Int</span><span class="p">?</span>
+
+<span class="c1">//build time : 8740.3ms</span>
+<span class="kd">func</span> <span class="nf">sendData</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">parameter</span> <span class="o">=</span> <span class="p">[</span><span class="s">"model"</span> <span class="p">:</span> <span class="n">model</span><span class="p">?</span><span class="o">.</span><span class="n">text</span> <span class="p">??</span> <span class="s">""</span><span class="p">,</span>
+                     <span class="s">"cat"</span> <span class="p">:</span> <span class="n">cat</span> <span class="p">??</span> <span class="s">""</span><span class="p">,</span>
+                     <span class="s">"name"</span> <span class="p">:</span> <span class="n">name</span> <span class="p">??</span> <span class="s">""</span><span class="p">,</span>
+                     <span class="s">"number"</span> <span class="p">:</span> <span class="n">number</span> <span class="p">??</span> <span class="mi">0</span><span class="p">,</span>
+                     <span class="s">"dog"</span> <span class="p">:</span> <span class="s">"dog"</span><span class="p">]</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"send request with parameter:</span><span class="se">\(</span><span class="n">parameter</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">//build time: 3235.4ms</span>
+<span class="k">let</span> <span class="nv">parameter</span> <span class="p">:</span> <span class="p">[</span><span class="kt">String</span> <span class="p">:</span> <span class="kt">AnyObject</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s">"model"</span> <span class="p">:</span> <span class="n">model</span><span class="p">?</span><span class="o">.</span><span class="n">text</span> <span class="p">??</span> <span class="s">""</span><span class="p">,</span>
+                               <span class="s">"cat"</span> <span class="p">:</span> <span class="n">cat</span> <span class="p">??</span> <span class="s">""</span><span class="p">,</span>
+                               <span class="s">"name"</span> <span class="p">:</span> <span class="n">name</span> <span class="p">??</span> <span class="s">""</span><span class="p">,</span>
+                               <span class="s">"number"</span> <span class="p">:</span> <span class="n">number</span> <span class="p">??</span> <span class="mi">0</span><span class="p">,</span>
+                               <span class="s">"dog"</span> <span class="p">:</span> <span class="s">"dog"</span><span class="p">]</span>
+</code></pre></div></div>
+
+<h5 id="2any-或-anyobjec-any">2.Any 或 AnyObjec 、any?</h5>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//build time: 200.3ms</span>
+<span class="k">let</span> <span class="nv">parameter</span> <span class="p">:</span> <span class="p">[</span><span class="kt">String</span> <span class="p">:</span> <span class="kt">String</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s">"model"</span> <span class="p">:</span> <span class="n">model</span><span class="p">?</span><span class="o">.</span><span class="n">text</span> <span class="p">??</span> <span class="s">""</span><span class="p">,</span>
+                    <span class="s">"cat"</span> <span class="p">:</span> <span class="n">cat</span> <span class="p">??</span> <span class="s">""</span><span class="p">,</span>
+                    <span class="s">"name"</span> <span class="p">:</span> <span class="n">name</span> <span class="p">??</span> <span class="s">""</span><span class="p">,</span>
+                    <span class="s">"number"</span> <span class="p">:</span> <span class="s">"</span><span class="se">\(</span><span class="n">number</span> <span class="p">??</span> <span class="mi">0</span><span class="se">)</span><span class="s">"</span><span class="p">,</span>
+                    <span class="s">"dog"</span> <span class="p">:</span> <span class="s">"dog"</span><span class="p">]</span>
+</code></pre></div></div>
+<h5 id="3运算时使用可选值">3.运算时使用可选值</h5>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//build time : 9804ms</span>
+<span class="kd">func</span> <span class="nf">calculateSize</span><span class="p">(</span><span class="nv">view</span> <span class="p">:</span> <span class="kt">UIView</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">CGSize</span><span class="p">{</span>
+    <span class="k">return</span> <span class="kt">CGSize</span><span class="p">(</span><span class="nv">width</span><span class="p">:</span> <span class="mi">10</span> <span class="o">+</span> <span class="p">(</span><span class="n">view</span><span class="p">?</span><span class="o">.</span><span class="n">bounds</span><span class="o">.</span><span class="n">width</span> <span class="p">??</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">view</span><span class="p">?</span><span class="o">.</span><span class="n">bounds</span><span class="o">.</span><span class="n">height</span> <span class="p">??</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="mi">22</span><span class="p">,</span> <span class="nv">height</span><span class="p">:</span> <span class="mi">20</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">//build time : 172ms</span>
+<span class="kd">func</span> <span class="nf">calculateSize</span><span class="p">(</span><span class="nv">view</span> <span class="p">:</span> <span class="kt">UIView</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">CGSize</span><span class="p">{</span>
+    <span class="k">let</span> <span class="nv">width</span> <span class="o">=</span> <span class="n">view</span><span class="p">?</span><span class="o">.</span><span class="n">bounds</span><span class="o">.</span><span class="n">width</span> <span class="p">??</span> <span class="mi">0</span>
+    <span class="k">let</span> <span class="nv">height</span> <span class="o">=</span> <span class="n">view</span><span class="p">?</span><span class="o">.</span><span class="n">bounds</span><span class="o">.</span><span class="n">height</span> <span class="p">??</span> <span class="mi">0</span>
+    <span class="k">return</span> <span class="kt">CGSize</span><span class="p">(</span><span class="nv">width</span><span class="p">:</span> <span class="mi">10</span> <span class="o">+</span> <span class="n">width</span> <span class="o">+</span> <span class="n">height</span> <span class="o">+</span> <span class="mi">22</span><span class="p">,</span> <span class="nv">height</span><span class="p">:</span> <span class="mi">20</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h5 id="4-三目运算符bool--a--b">4. 三目运算符<code class="language-plaintext highlighter-rouge">(Bool ? a : b)</code></h5>
+<h5 id="5-集合运算使用或">5. 集合运算使用+或+=</h5>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//build time 1400.6ms</span>
+<span class="kd">func</span> <span class="nf">arrPlusOperatos</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">arr1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+    <span class="k">let</span> <span class="nv">arr2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
+    <span class="n">result</span> <span class="o">+=</span> <span class="n">arr1</span> <span class="o">+</span> <span class="n">arr2</span> <span class="o">+</span> <span class="p">[</span><span class="mi">10</span><span class="p">]</span>
+<span class="p">}</span>
+<span class="c1">//build time 8.6ms</span>
+<span class="kd">func</span> <span class="nf">arrPlusOperatos</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">arr1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+    <span class="k">let</span> <span class="nv">arr2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
+    <span class="n">result</span><span class="o">.</span><span class="nf">appendContentsOf</span><span class="p">(</span><span class="n">arr1</span><span class="p">)</span>
+    <span class="n">result</span><span class="o">.</span><span class="nf">appendContentsOf</span><span class="p">(</span><span class="n">arr2</span><span class="p">)</span>
+    <span class="n">result</span><span class="o">.</span><span class="nf">appendContentsOf</span><span class="p">([</span><span class="mi">10</span><span class="p">])</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h5 id="6-string-合并使用-">6. String 合并使用 +</h5>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//build time 79.4ms</span>
+<span class="kd">func</span> <span class="nf">strPlusOperatos</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">str1</span> <span class="o">=</span> <span class="s">"1234567890"</span>
+    <span class="k">let</span> <span class="nv">str2</span> <span class="o">=</span> <span class="s">"ABCDEFGHIJK"</span>
+    <span class="n">result</span> <span class="o">+=</span> <span class="n">str1</span> <span class="o">+</span> <span class="n">str2</span> <span class="o">+</span> <span class="s">"hello world"</span>
+<span class="p">}</span>
+<span class="c1">//build time 6ms</span>
+<span class="kd">func</span> <span class="nf">strPlusOperatos</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">str1</span> <span class="o">=</span> <span class="s">"1234567890"</span>
+    <span class="k">let</span> <span class="nv">str2</span> <span class="o">=</span> <span class="s">"ABCDEFGHIJK"</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="s">"</span><span class="se">\(</span><span class="n">str1</span><span class="se">)\(</span><span class="n">str2</span><span class="se">)</span><span class="s">hello world"</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h5 id="7-模块化代码使用私有cocoapods-repository-让不同模块以framework或则a文件的形式在项目里使用如此每次编译的时候就只需要编译自己模块下的代码其他模块的代码将会被编译后缓存不需要重复编译">7. 模块化代码，使用私有Cocoapods repository. 让不同模块以Framework或则.a文件的形式在项目里使用。如此每次编译的时候就只需要编译自己模块下的代码。其他模块的代码将会被编译后缓存，不需要重复编译</h5>
+
+:ET

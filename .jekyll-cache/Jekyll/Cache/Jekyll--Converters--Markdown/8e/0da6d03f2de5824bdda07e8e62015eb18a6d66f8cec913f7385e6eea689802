@@ -1,0 +1,221 @@
+I"��<h3 id="介绍">介绍:</h3>
+<p>本文将记录一些特殊语法的使用方法，以及如何利用这些特殊语法给编程带来的方便,第一部分为语法记录，第二部分为编程技巧</p>
+
+<h3 id="一语法记录">一、语法记录</h3>
+<h4 id="11-集合index相关">1.1 集合index相关</h4>
+<p><strong>全新的集合用collection.index标识集合中元素位置。Array.indices 为数组中所有index的集合</strong></p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="nv">str2</span> <span class="o">=</span> <span class="s">"12345678"</span>
+<span class="c1">// collections.count</span>
+<span class="n">str2</span><span class="o">.</span><span class="n">count</span>                                  <span class="c1">// 8</span>
+<span class="c1">// 获取集合中元素位置</span>
+<span class="n">str2</span><span class="p">[</span><span class="n">str2</span><span class="o">.</span><span class="n">indices</span><span class="o">.</span><span class="n">first</span><span class="o">!</span><span class="p">]</span>                   <span class="c1">// "1"</span>
+<span class="p">[</span><span class="mi">82</span><span class="p">,</span> <span class="mi">58</span><span class="p">,</span> <span class="mi">76</span><span class="p">,</span> <span class="mi">49</span><span class="p">,</span> <span class="mi">88</span><span class="p">,</span> <span class="mi">90</span><span class="p">]</span><span class="o">.</span><span class="n">indices</span>            <span class="c1">// 0..&lt;6</span>
+<span class="k">for</span> <span class="n">a</span> <span class="k">in</span> <span class="n">str2</span><span class="o">.</span><span class="n">indices</span><span class="p">{</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">encodedOffset</span><span class="p">)</span>                  <span class="c1">// 0,1,2,3,4,5,6,7</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p><strong>String分割一般用 <code class="language-plaintext highlighter-rouge">..&lt;</code> 例：<code class="language-plaintext highlighter-rouge">string.startIndex..&lt;string.endInde</code></strong></p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">var</span> <span class="nv">str</span> <span class="o">=</span> <span class="s">"Hello, playground"</span>               
+<span class="k">let</span> <span class="nv">range</span> <span class="o">=</span> <span class="n">str</span><span class="o">.</span><span class="nf">index</span><span class="p">(</span><span class="n">str</span><span class="o">.</span><span class="n">startIndex</span><span class="p">,</span> <span class="nv">offsetBy</span><span class="p">:</span> <span class="mi">0</span><span class="p">)</span><span class="o">..&lt;</span><span class="n">str</span><span class="o">.</span><span class="nf">index</span><span class="p">(</span><span class="n">str</span><span class="o">.</span><span class="n">startIndex</span><span class="p">,</span> <span class="nv">offsetBy</span><span class="p">:</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">str</span><span class="p">[</span><span class="n">range</span><span class="p">]</span>                                  <span class="c1">// "Hello"</span>
+</code></pre></div></div>
+<p><strong>获取字符串内容字符串长度不确定，获取长度大于字符串长度时，返回整串，目标长度小于字符串长度返回截取的子串内容</strong></p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">var</span> <span class="nv">length</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="k">var</span> <span class="nv">contentRange</span><span class="p">:</span><span class="kt">Range</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">.</span><span class="kt">Index</span><span class="o">&gt;</span>
+<span class="k">if</span> <span class="k">let</span> <span class="nv">content</span> <span class="o">=</span> <span class="n">str</span><span class="o">.</span><span class="nf">index</span><span class="p">(</span><span class="n">str</span><span class="o">.</span><span class="n">startIndex</span><span class="p">,</span> <span class="nv">offsetBy</span><span class="p">:</span> <span class="n">length</span><span class="p">,</span> <span class="nv">limitedBy</span><span class="p">:</span> <span class="n">str</span><span class="o">.</span><span class="n">endIndex</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">contentRange</span> <span class="o">=</span> <span class="n">str</span><span class="o">.</span><span class="nf">index</span><span class="p">(</span><span class="n">str</span><span class="o">.</span><span class="n">startIndex</span><span class="p">,</span> <span class="nv">offsetBy</span><span class="p">:</span> <span class="mi">0</span><span class="p">)</span><span class="o">..&lt;</span><span class="n">str</span><span class="o">.</span><span class="nf">index</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="nv">offsetBy</span><span class="p">:</span> <span class="mi">0</span><span class="p">)</span>
+<span class="p">}</span> <span class="k">else</span><span class="p">{</span>
+    <span class="n">contentRange</span> <span class="o">=</span> <span class="n">str</span><span class="o">.</span><span class="nf">index</span><span class="p">(</span><span class="n">str</span><span class="o">.</span><span class="n">startIndex</span><span class="p">,</span> <span class="nv">offsetBy</span><span class="p">:</span> <span class="mi">0</span><span class="p">)</span><span class="o">..&lt;</span><span class="n">str</span><span class="o">.</span><span class="nf">index</span><span class="p">(</span><span class="n">str</span><span class="o">.</span><span class="n">endIndex</span><span class="p">,</span> <span class="nv">offsetBy</span><span class="p">:</span> <span class="mi">0</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="n">str</span><span class="p">[</span><span class="n">contentRange</span><span class="p">]</span>                        <span class="c1">// "Hello, pla"</span>
+<span class="k">let</span> <span class="nv">a</span>  <span class="o">=</span> <span class="n">str</span><span class="p">[</span><span class="n">str</span><span class="o">.</span><span class="n">startIndex</span><span class="o">..&lt;</span><span class="n">str</span><span class="o">.</span><span class="nf">index</span><span class="p">(</span><span class="nv">after</span><span class="p">:</span> <span class="n">str</span><span class="o">.</span><span class="n">startIndex</span><span class="p">)]</span> <span class="c1">//"H"</span>
+</code></pre></div></div>
+
+<h4 id="12-autoclosure自动闭包">1.2 @autoclosure（自动闭包）</h4>
+<p><strong>自动闭包不接受任何参数，延迟求值，只有在被调用时才会返回被包装在其中的表达式的值。</strong><br />
+ 在我们调用函数A获取函数结果作为参数传递给另一个函数B时，无论这个结果在函数B中是否使用，函数A都会被执行，如下第二次调用<code class="language-plaintext highlighter-rouge">goodAfternoon(afternoon: false, who: getName())</code>方法后并没有使用getName的值但是函数<code class="language-plaintext highlighter-rouge">getName</code>还是执行了</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">func</span> <span class="nf">getName</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">String</span><span class="p">{</span>
+    <span class="nf">print</span><span class="p">(</span><span class="kd">#function</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s">"DKJone"</span>
+<span class="p">}</span>
+<span class="kd">func</span> <span class="nf">goodAfternoon</span><span class="p">(</span><span class="nv">afternoon</span><span class="p">:</span><span class="kt">Bool</span> <span class="p">,</span><span class="nv">who</span><span class="p">:</span><span class="kt">String</span><span class="p">){</span>
+    <span class="k">if</span> <span class="n">afternoon</span> <span class="p">{</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"Good afternoon, </span><span class="se">\(</span><span class="n">who</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="nf">print</span><span class="p">(</span><span class="s">"------goodAfternoon(afternoon: true, who: getName())-------"</span><span class="p">)</span>
+<span class="nf">goodAfternoon</span><span class="p">(</span><span class="nv">afternoon</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">who</span><span class="p">:</span> <span class="nf">getName</span><span class="p">())</span>
+<span class="nf">print</span><span class="p">(</span><span class="s">"------goodAfternoon(afternoon: false, who: getName())-------"</span><span class="p">)</span>
+<span class="nf">goodAfternoon</span><span class="p">(</span><span class="nv">afternoon</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="nv">who</span><span class="p">:</span> <span class="nf">getName</span><span class="p">())</span>
+<span class="cm">/*log:
+    ------goodAfternoon(afternoon: true, who: getName())-------
+    getName()
+    Good afternoon, DKJone
+    ------goodAfternoon(afternoon: false, who: getName())-------
+    getName()
+*/</span>
+</code></pre></div></div>
+<p>当我们在第二个参数添加 <code class="language-plaintext highlighter-rouge">@autoclosure </code>关键字后，第二个参数中的代码会在函数执行时自动生成一个闭包，只有闭包真正执行时第二个参数种类代码才会调用所以下面的<code class="language-plaintext highlighter-rouge">goodMooning(morning: false, who: getName())</code>并没有调用<code class="language-plaintext highlighter-rouge">getName</code>方法</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//@autoclosure</span>
+<span class="kd">func</span> <span class="nf">goodMooning</span><span class="p">(</span><span class="nv">morning</span><span class="p">:</span><span class="kt">Bool</span> <span class="p">,</span><span class="nv">who</span><span class="p">:</span><span class="kd">@autoclosure</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">String</span><span class="p">){</span>
+    <span class="k">if</span> <span class="n">morning</span> <span class="p">{</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"Good morning, </span><span class="se">\(</span><span class="nf">who</span><span class="p">()</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="nf">print</span><span class="p">(</span><span class="s">"------goodMooning(morning: true, who: getName())-------"</span><span class="p">)</span>
+<span class="nf">goodMooning</span><span class="p">(</span><span class="nv">morning</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">who</span><span class="p">:</span> <span class="nf">getName</span><span class="p">())</span>
+<span class="nf">print</span><span class="p">(</span><span class="s">"------goodMooning(morning: false, who: getName())-------"</span><span class="p">)</span>
+<span class="nf">goodMooning</span><span class="p">(</span><span class="nv">morning</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="nv">who</span><span class="p">:</span> <span class="nf">getName</span><span class="p">())</span>
+<span class="cm">/* log:
+------goodMooning(morning: true, who: getName())-------
+getName()
+Good morning, DKJone
+------goodMooning(morning: false, who: getName())-------
+*/</span>
+</code></pre></div></div>
+<h4 id="13-sequencefirst-next-">1.3 sequence(first: next: )</h4>
+<p>根据next里的闭包来生成下一个元素，和reduce完全相反。特别的是这个函数返回的是一个 <code class="language-plaintext highlighter-rouge">UnfoldSequence</code> ，即里面的值是<code class="language-plaintext highlighter-rouge">lazy</code>的，只要在访问时才生成，这也可能是一个无限的队列。</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">x</span> <span class="k">in</span> <span class="nf">sequence</span><span class="p">(</span><span class="nv">first</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span> <span class="nv">next</span><span class="p">:</span> <span class="p">{</span> <span class="nv">$0</span> <span class="o">*</span> <span class="mi">2</span> <span class="p">})</span><span class="o">.</span><span class="nf">prefix</span><span class="p">(</span><span class="nv">while</span><span class="p">:</span> <span class="p">{</span> <span class="nv">$0</span> <span class="o">&lt;</span> <span class="mi">4</span> <span class="p">})</span> <span class="p">{</span>
+    <span class="c1">// 0.1, 0.2, 0.4, 0.8, ...</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>似乎特别适合用来寻祖，当next闭包返回的是nil时队列就终止了：</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">view</span> <span class="k">in</span> <span class="nf">sequence</span><span class="p">(</span><span class="nv">first</span><span class="p">:</span> <span class="n">someView</span><span class="p">,</span> <span class="nv">next</span><span class="p">:</span> <span class="p">{</span> <span class="nv">$0</span><span class="o">.</span><span class="n">superview</span> <span class="p">})</span> <span class="p">{</span>
+    <span class="c1">// someView, someView.superview, someView.superview.superview, ...</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="二编码的艺术">二、编码的艺术</h3>
+<p><strong>2.1 数组中的每个元素乘以2</strong></p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        <span class="p">(</span><span class="mi">1</span><span class="o">...</span><span class="mi">7</span><span class="p">)</span><span class="o">.</span><span class="n">map</span><span class="p">{</span><span class="nv">$0</span> <span class="o">*</span> <span class="mi">2</span><span class="p">}</span>
+</code></pre></div></div>
+<p><strong>2.2 数组中的元素求和/排序</strong>
+在swift中<code class="language-plaintext highlighter-rouge">+-*/&gt;&lt;=</code>都是一个函数/闭包</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        <span class="p">(</span><span class="mi">1</span><span class="o">...</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="nf">reduce</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">+</span><span class="p">)</span>               <span class="c1">// 55</span>
+        <span class="p">(</span><span class="mi">1</span><span class="o">...</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="nf">sorted</span><span class="p">(</span><span class="nv">by</span><span class="p">:</span> <span class="o">&gt;</span> <span class="p">)</span>             <span class="c1">// [10,9,8,7,6, 5,4,3,2,1] </span>
+</code></pre></div></div>
+
+<p><strong>2.3 验证在字符串中是否存在指定单词</strong></p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        <span class="k">let</span> <span class="nv">words</span> <span class="o">=</span> <span class="p">[</span><span class="s">"Swift"</span><span class="p">,</span><span class="s">"iOS"</span><span class="p">,</span><span class="s">"cocoa"</span><span class="p">,</span><span class="s">"OSX"</span><span class="p">,</span><span class="s">"tvOS"</span><span class="p">]</span>
+        <span class="k">let</span> <span class="nv">tweet</span> <span class="o">=</span> <span class="s">"This is an example tweet larking about Swift"</span>
+
+        <span class="k">let</span> <span class="nv">valid</span> <span class="o">=</span> <span class="o">!</span><span class="n">words</span><span class="o">.</span><span class="nf">filter</span><span class="p">({</span><span class="n">tweet</span><span class="o">.</span><span class="nf">contains</span><span class="p">(</span><span class="nv">$0</span><span class="p">)})</span><span class="o">.</span><span class="n">isEmpty</span>     <span class="c1">// false</span>
+        <span class="c1">//或者</span>
+        <span class="n">tweet</span><span class="o">.</span><span class="nf">split</span><span class="p">(</span><span class="nv">separator</span><span class="p">:</span> <span class="s">" "</span><span class="p">)</span>
+            <span class="o">.</span><span class="kd">lazy</span>
+            <span class="o">.</span><span class="nf">map</span><span class="p">(</span><span class="kt">String</span><span class="o">.</span><span class="kd">init</span><span class="p">)</span>
+            <span class="o">.</span><span class="nf">contains</span><span class="p">(</span><span class="nv">where</span><span class="p">:</span> <span class="kt">Set</span><span class="p">(</span><span class="n">words</span><span class="p">)</span><span class="o">.</span><span class="n">contains</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><strong>2.4 一行代码输出生日歌</strong></p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        <span class="p">(</span><span class="mi">1</span><span class="o">...</span><span class="mi">4</span><span class="p">)</span><span class="o">.</span><span class="n">forEach</span><span class="p">{</span><span class="nf">print</span><span class="p">(</span><span class="s">"Happy Birthday "</span> <span class="o">+</span> <span class="p">((</span><span class="nv">$0</span> <span class="o">==</span> <span class="mi">3</span><span class="p">)</span> <span class="p">?</span> <span class="s">"dear Alice"</span><span class="p">:</span><span class="s">"to You"</span><span class="p">))}</span>
+        <span class="cm">/*log:
+                Happy Birthday to You
+                Happy Birthday to You
+                Happy Birthday dear uraimo
+                Happy Birthday to You
+        */</span>
+</code></pre></div></div>
+
+<p><strong>2.5 在数组中查找最小（或最大）值</strong></p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        <span class="c1">//Find the minimum of an array of Ints</span>
+        <span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="o">-</span><span class="mi">22</span><span class="p">,</span><span class="mi">753</span><span class="p">,</span><span class="mi">55</span><span class="p">,</span><span class="mi">137</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">279</span><span class="p">,</span><span class="mi">1034</span><span class="p">,</span><span class="mi">77</span><span class="p">]</span><span class="o">.</span><span class="nf">sorted</span><span class="p">()</span><span class="o">.</span><span class="n">first</span>
+        <span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="o">-</span><span class="mi">22</span><span class="p">,</span><span class="mi">753</span><span class="p">,</span><span class="mi">55</span><span class="p">,</span><span class="mi">137</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">279</span><span class="p">,</span><span class="mi">1034</span><span class="p">,</span><span class="mi">77</span><span class="p">]</span><span class="o">.</span><span class="nf">reduce</span><span class="p">(</span><span class="kt">Int</span><span class="o">.</span><span class="n">max</span><span class="p">,</span> <span class="n">min</span><span class="p">)</span>
+        <span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="o">-</span><span class="mi">22</span><span class="p">,</span><span class="mi">753</span><span class="p">,</span><span class="mi">55</span><span class="p">,</span><span class="mi">137</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">279</span><span class="p">,</span><span class="mi">1034</span><span class="p">,</span><span class="mi">77</span><span class="p">]</span><span class="o">.</span><span class="nf">min</span><span class="p">()</span>
+        <span class="c1">//Find the maximum of an array of Ints</span>
+        <span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="o">-</span><span class="mi">22</span><span class="p">,</span><span class="mi">753</span><span class="p">,</span><span class="mi">55</span><span class="p">,</span><span class="mi">137</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">279</span><span class="p">,</span><span class="mi">1034</span><span class="p">,</span><span class="mi">77</span><span class="p">]</span><span class="o">.</span><span class="nf">sorted</span><span class="p">()</span><span class="o">.</span><span class="n">last</span>
+        <span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="o">-</span><span class="mi">22</span><span class="p">,</span><span class="mi">753</span><span class="p">,</span><span class="mi">55</span><span class="p">,</span><span class="mi">137</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">279</span><span class="p">,</span><span class="mi">1034</span><span class="p">,</span><span class="mi">77</span><span class="p">]</span><span class="o">.</span><span class="nf">reduce</span><span class="p">(</span><span class="kt">Int</span><span class="o">.</span><span class="n">min</span><span class="p">,</span> <span class="n">max</span><span class="p">)</span>
+        <span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="o">-</span><span class="mi">22</span><span class="p">,</span><span class="mi">753</span><span class="p">,</span><span class="mi">55</span><span class="p">,</span><span class="mi">137</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">279</span><span class="p">,</span><span class="mi">1034</span><span class="p">,</span><span class="mi">77</span><span class="p">]</span><span class="o">.</span><span class="nf">max</span><span class="p">()</span>
+</code></pre></div></div>
+<p><strong>2.6.过滤数组中的数字</strong>
+*partition 会根据条件把集合里的元素重新排序，符合条件的元素移动到最后，返回一个两个部分分界元素的索引.</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        <span class="kd">extension</span> <span class="kt">Sequence</span><span class="p">{</span>
+            <span class="c1">//typealias Element = Self.Iterator.Element</span>
+            <span class="kd">func</span> <span class="nf">partitionBy</span><span class="p">(</span><span class="nv">fu</span><span class="p">:</span> <span class="p">(</span><span class="kt">Element</span><span class="p">)</span><span class="o">-&gt;</span><span class="kt">Bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">([</span><span class="kt">Element</span><span class="p">],[</span><span class="kt">Element</span><span class="p">]){</span>
+                <span class="k">var</span> <span class="nv">first</span> <span class="o">=</span> <span class="p">[</span><span class="kt">Element</span><span class="p">]()</span>
+                <span class="k">var</span> <span class="nv">second</span> <span class="o">=</span> <span class="p">[</span><span class="kt">Element</span><span class="p">]()</span>
+                <span class="k">for</span> <span class="n">el</span> <span class="k">in</span> <span class="k">self</span> <span class="p">{</span>
+                    <span class="k">if</span> <span class="nf">fu</span><span class="p">(</span><span class="n">el</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="n">first</span><span class="o">.</span><span class="nf">append</span><span class="p">(</span><span class="n">el</span><span class="p">)</span>
+                    <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+                        <span class="n">second</span><span class="o">.</span><span class="nf">append</span><span class="p">(</span><span class="n">el</span><span class="p">)</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+                <span class="nf">return</span> <span class="p">(</span><span class="n">first</span><span class="p">,</span><span class="n">second</span><span class="p">)</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">let</span> <span class="nv">part</span> <span class="o">=</span> <span class="p">[</span><span class="mi">82</span><span class="p">,</span> <span class="mi">58</span><span class="p">,</span> <span class="mi">76</span><span class="p">,</span> <span class="mi">49</span><span class="p">,</span> <span class="mi">88</span><span class="p">,</span> <span class="mi">90</span><span class="p">]</span><span class="o">.</span><span class="n">partitionBy</span><span class="p">{</span><span class="nv">$0</span> <span class="o">&lt;</span> <span class="mi">60</span><span class="p">}</span>
+        <span class="n">part</span> <span class="c1">// ([58, 49], [82, 76, 88, 90])</span>
+        <span class="c1">//简写一</span>
+        <span class="kd">extension</span> <span class="kt">Sequence</span><span class="p">{</span>
+            <span class="kd">func</span> <span class="nf">anotherPartitionBy</span><span class="p">(</span><span class="nv">fu</span><span class="p">:</span> <span class="p">(</span><span class="k">Self</span><span class="o">.</span><span class="kt">Iterator</span><span class="o">.</span><span class="kt">Element</span><span class="p">)</span><span class="o">-&gt;</span><span class="kt">Bool</span><span class="p">)</span><span class="o">-&gt;</span><span class="p">([</span><span class="k">Self</span><span class="o">.</span><span class="kt">Iterator</span><span class="o">.</span><span class="kt">Element</span><span class="p">],[</span><span class="k">Self</span><span class="o">.</span><span class="kt">Iterator</span><span class="o">.</span><span class="kt">Element</span><span class="p">]){</span>
+                <span class="nf">return</span> <span class="p">(</span><span class="k">self</span><span class="o">.</span><span class="nf">filter</span><span class="p">(</span><span class="n">fu</span><span class="p">),</span><span class="k">self</span><span class="o">.</span><span class="nf">filter</span><span class="p">({</span><span class="o">!</span><span class="nf">fu</span><span class="p">(</span><span class="nv">$0</span><span class="p">)}))</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">let</span> <span class="nv">part2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">82</span><span class="p">,</span> <span class="mi">58</span><span class="p">,</span> <span class="mi">76</span><span class="p">,</span> <span class="mi">49</span><span class="p">,</span> <span class="mi">88</span><span class="p">,</span> <span class="mi">90</span><span class="p">]</span><span class="o">.</span><span class="n">anotherPartitionBy</span><span class="p">{</span><span class="nv">$0</span> <span class="o">&lt;</span> <span class="mi">60</span><span class="p">}</span>
+        <span class="n">part2</span> <span class="c1">// ([58, 49], [82, 76, 88, 90])</span>
+        <span class="c1">//实际应用版</span>
+        <span class="k">var</span> <span class="nv">part3</span> <span class="o">=</span> <span class="p">[</span><span class="mi">82</span><span class="p">,</span> <span class="mi">58</span><span class="p">,</span> <span class="mi">76</span><span class="p">,</span> <span class="mi">49</span><span class="p">,</span> <span class="mi">88</span><span class="p">,</span> <span class="mi">90</span><span class="p">]</span><span class="o">.</span><span class="nf">reduce</span><span class="p">(</span> <span class="p">([],[]),</span> <span class="p">{</span>
+            <span class="p">(</span><span class="nv">a</span><span class="p">:([</span><span class="kt">Int</span><span class="p">],[</span><span class="kt">Int</span><span class="p">]),</span><span class="nv">n</span><span class="p">:</span><span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">([</span><span class="kt">Int</span><span class="p">],[</span><span class="kt">Int</span><span class="p">])</span> <span class="nf">in</span>
+            <span class="p">(</span><span class="n">n</span><span class="o">&lt;</span><span class="mi">60</span><span class="p">)</span> <span class="p">?</span> <span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="mi">0</span><span class="o">+</span><span class="p">[</span><span class="n">n</span><span class="p">],</span><span class="n">a</span><span class="o">.</span><span class="mi">1</span><span class="p">)</span> <span class="p">:</span> <span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="mi">0</span><span class="p">,</span><span class="n">a</span><span class="o">.</span><span class="mi">1</span><span class="o">+</span><span class="p">[</span><span class="n">n</span><span class="p">])</span>
+        <span class="p">})</span>
+        <span class="n">part3</span> <span class="c1">// ([58, 49], [82, 76, 88, 90])</span>
+</code></pre></div></div>
+<p><strong>2.7 通过解构元组交换</strong></p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code>        <span class="k">var</span> <span class="nv">a</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">b</span><span class="o">=</span><span class="mi">2</span>
+        <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+        <span class="s">"a=</span><span class="se">\(</span><span class="n">a</span><span class="se">)</span><span class="s">,b=</span><span class="se">\(</span><span class="n">b</span><span class="se">)</span><span class="s">"</span>   <span class="c1">// "a=2,b=1"</span>
+</code></pre></div></div>
+<p><strong>2.8 正则表达式</strong></p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">extension</span> <span class="kt">String</span><span class="p">{</span>
+    <span class="c1">/// 移除小数点后结尾多余0和小数点</span>
+    <span class="kd">public</span> <span class="k">var</span> <span class="nv">removeEndZero</span><span class="p">:</span><span class="kt">String</span><span class="p">{</span>
+        <span class="k">return</span> <span class="nf">replacingOccurrences</span><span class="p">(</span><span class="nv">of</span><span class="p">:</span> <span class="s">"[.]?[0]*$"</span><span class="p">,</span> <span class="nv">with</span><span class="p">:</span> <span class="s">""</span><span class="p">,</span> <span class="nv">options</span><span class="p">:</span> <span class="p">[</span><span class="o">.</span><span class="n">regularExpression</span><span class="p">,</span><span class="o">.</span><span class="n">caseInsensitive</span><span class="p">])</span>
+    <span class="p">}</span>
+    <span class="c1">/// 移除电话号码开头的 +086、086、86、+86</span>
+    <span class="kd">public</span> <span class="k">var</span> <span class="nv">remove086Phone</span><span class="p">:</span><span class="kt">String</span><span class="p">{</span>
+        <span class="k">return</span> <span class="nf">replacingOccurrences</span><span class="p">(</span><span class="nv">of</span><span class="p">:</span> <span class="s">"^[+]?[0]?86"</span><span class="p">,</span> <span class="nv">with</span><span class="p">:</span> <span class="s">""</span><span class="p">,</span> <span class="nv">options</span><span class="p">:</span> <span class="p">[</span><span class="o">.</span><span class="n">regularExpression</span><span class="p">,</span><span class="o">.</span><span class="n">caseInsensitive</span><span class="p">])</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p><strong>2.9.限制输入数字字符</strong></p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">func</span> <span class="nf">textView</span><span class="p">(</span><span class="n">_</span> <span class="nv">textView</span><span class="p">:</span> <span class="kt">UITextView</span><span class="p">,</span> <span class="n">shouldChangeTextIn</span> <span class="nv">range</span><span class="p">:</span> <span class="kt">NSRange</span><span class="p">,</span> <span class="n">replacementText</span> <span class="nv">text</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="n">text</span> <span class="o">==</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">{</span>
+        <span class="n">textView</span><span class="o">.</span><span class="nf">resignFirstResponder</span><span class="p">()</span>
+        <span class="k">return</span> <span class="kc">false</span>
+    <span class="p">}</span>
+        <span class="k">return</span> <span class="kt">NSPredicate</span><span class="p">(</span><span class="nv">format</span><span class="p">:</span> <span class="s">"SELF MATCHES %@"</span><span class="p">,</span> <span class="nv">argumentArray</span><span class="p">:</span> <span class="p">[</span><span class="s">"[</span><span class="se">\\</span><span class="s">d]?[</span><span class="se">\\</span><span class="s">cx]?"</span><span class="p">])</span><span class="o">.</span><span class="nf">evaluate</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="n">text</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><strong>2.10 读取一个文件</strong></p>
+
+<p>和其他语言不同，Swift 不能使用内建的函数读取文件，并把每一行存放到数组中。不过我们可以结合 <code class="language-plaintext highlighter-rouge">split</code> 和 <code class="language-plaintext highlighter-rouge">map</code> 方法写一段简短的代码，这样就无需使用 for 循环：</p>
+
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="nv">path</span> <span class="o">=</span> <span class="kt">Bundle</span><span class="o">.</span><span class="n">main</span><span class="o">.</span><span class="nf">path</span><span class="p">(</span><span class="nv">forResource</span><span class="p">:</span> <span class="s">"test"</span><span class="p">,</span> <span class="nv">ofType</span><span class="p">:</span> <span class="s">"txt"</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">lines</span> <span class="o">=</span> <span class="k">try</span><span class="p">?</span> <span class="kt">String</span><span class="p">(</span><span class="nv">contentsOfFile</span><span class="p">:</span> <span class="n">path</span><span class="o">!</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">{</span><span class="nv">$0</span> <span class="o">==</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">}</span><span class="o">.</span><span class="nf">map</span><span class="p">(</span><span class="kt">String</span><span class="o">.</span><span class="kd">init</span><span class="p">)</span>
+<span class="k">if</span> <span class="k">let</span> <span class="nv">lines</span><span class="o">=</span><span class="n">lines</span> <span class="p">{</span>
+    <span class="n">lines</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="c1">// aaaaa</span>
+    <span class="n">lines</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="c1">// bbbbb</span>
+    <span class="n">lines</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="c1">// ccccc</span>
+    <span class="n">lines</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="c1">// ddddd</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+:ET

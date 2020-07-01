@@ -58,6 +58,7 @@ tags:
 
 4.越狱用户：
 [deb安装包地址 - *提取码: dq53*](https://pan.baidu.com/s/1NyDrM_VF3JYv7PAyW_VkcQ)  
+或添加源`https://dkjone.github.io/`下载
 
 
 ### 请我喝杯☕️     

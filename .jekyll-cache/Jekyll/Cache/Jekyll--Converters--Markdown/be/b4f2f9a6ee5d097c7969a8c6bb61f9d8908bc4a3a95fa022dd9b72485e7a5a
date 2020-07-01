@@ -1,0 +1,83 @@
+I"�<h1 id="dkwechathelper">DKWechatHelper</h1>
+
+<p>不止于抢红包，功能丰富的微信插件。本软件已成功运行在(iphone7-iphone11、iPad) 
+给个⭐️不迷路↗️ <br />
+<a href="https://github.com/DKWechatHelper/DKWechatHelper/releases/tag/1.0.3">v1.0.3</a>适用微信7.0.13<br />
+<a href="https://github.com/DKWechatHelper/DKWechatHelper/releases/tag/1.0.2">v1.0.2</a>适用微信7.0.11<br />
+<a href="https://github.com/DKWechatHelper/DKWechatHelper/releases/tag/1.0.1">v1.0.1</a>适用微信7.0.8~7.0.10<br />
+<a href="https://github.com/DKWechatHelper/DKWechatHelper/releases/tag/1.0.0">v1.0.0</a> 适用微信7.0.0-7.0.3</p>
+
+<p>更多更新内容请查看<a href="https://github.com/DKWechatHelper/DKWechatHelper/CHANGELOG.md">CHANGELOG</a></p>
+
+<h2 id="特色">特色</h2>
+<p>1.完全融入微信7.0UI风格，沉浸式体验 <br />
+2.完全免费的全功能插件<br />
+3.非越狱可后台抢红包 <br />
+4.安全高效源码公开
+5.设置方便，手机无需越狱</p>
+<h2 id="功能">功能</h2>
+<p>1.自动抢红包 <br />
+2.消息防撤回 <br />
+3.微信步数修改 <br />
+4.小游戏作弊（剪刀石头布和掷骰子）   <br />
+5.自动抢红包高级配置 <br />
+更多请查看下图： <br />
+<img src="https://upload-images.jianshu.io/upload_images/4066843-37413f551adf2752.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="IMG_0223.jpg" /></p>
+
+<h2 id="使用">使用：</h2>
+<p>1.源码学习 <br />
+    下载本项目，下载砸壳后的微信（7.0以上）（我给你准备了个 ）</p>
+<ul>
+  <li><a href="https://pan.baidu.com/s/15pVma66Ea822YVGrBa2GHw">7.0.0</a></li>
+  <li><a href="https://pan.baidu.com/s/1SHZHfu94Z_jhCkaaFDx8pA">7.0.2</a></li>
+  <li><a href="https://pan.baidu.com/s/11VoUXPC4vb5zg8HzP3kC0Q">7.0.8-<em>提取码:h54d</em></a></li>
+  <li><a href="https://pan.baidu.com/s/1mU_mezsWhqL2-AY0PB-vVg">7.0.11-<em>提取码: 2igg</em></a></li>
+  <li><a href="https://pan.baidu.com/s/1rqB0pV4zMEB6Z3VJTsTa8Q">7.0.13-<em>提取码: nx4m</em></a> <br />
+将下载的微信放到’/dkhelper/dkhelper/TargetApp/’目录下该目录下有一个空白文件’put ipa or app here‘，和它放在同一文件夹下即可，修改项目BundleId及签名信息，选择真机设备运行即可</li>
+</ul>
+
+<p>2.开发者： <br />
+    下载以下ipa后重签名应用：</p>
+<ul>
+  <li><a href="https://pan.baidu.com/s/1-zEUQRGn3H4bZVqHpyffzQ">未签名版7.0.0</a></li>
+  <li><a href="https://pan.baidu.com/s/1sOPCqnCPxSdIKq7TKuHK9g">未签名版7.0.11-<em>提取码: fe9f</em></a></li>
+  <li><a href="https://pan.baidu.com/s/1DgSl5u0Gip3cNdqZmRFEWw">未签名版7.0.13-<em>提取码: fhes</em></a><br />
+  注：推荐使用<a href="https://github.com/DanTheMan827/ios-app-signer">ios-app-signer</a>签名，使用方法自行百度</li>
+</ul>
+
+<p>3.普通用户： <br />
+    前往以下地址下载：上方未签名版
+    下载后使用 <a href="http://www.cydiaimpactor.com/">Cydia Impactor</a>安装</p>
+
+<p>4.越狱用户：
+<a href="https://pan.baidu.com/s/1NyDrM_VF3JYv7PAyW_VkcQ">deb安装包地址 - <em>提取码: dq53</em></a></p>
+
+<h3 id="请我喝杯️">请我喝杯☕️</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>微信</th>
+      <th>支付宝</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><img src="https://upload-images.jianshu.io/upload_images/4066843-2d18218a3c11e2c4.JPG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="IMG_4272.JPG" /></td>
+      <td><img src="https://upload-images.jianshu.io/upload_images/4066843-2aa3ce5b2d4d89ec.JPG?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="IMG_4286.JPG" /></td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="感谢">感谢：</h3>
+<p>本插件所有内容均为免费内容，其中使用了部分已存在项目源码构建。感谢以下项目的开源：<br />
+1.<a href="https://github.com/TKkk-iOSer/WeChatPlugin-iOS">WeChatPlugin-iOS</a> <br />
+2.<a href="https://github.com/buginux/WeChatRedEnvelop">WeChatRedEnvelop</a> <br />
+3.<a href="https://github.com/AloneMonkey/MonkeyDev">MonkeyDev</a> <br />
+4.<a href="https://www.jianshu.com/p/e797ba55e336">微信共存防封版伪代码分析</a></p>
+
+:ET
