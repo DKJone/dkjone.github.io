@@ -1,0 +1,11 @@
+{
+    "applinks": {
+        "apps": [],
+        "details": [
+            {
+                "appID": "NL54V6A3P5.com.sinoroad.szwhExpressway",
+                "paths": [ "/app/*", ]
+            }
+        ]
+    }
+}

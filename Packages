@@ -49,3 +49,20 @@ Author: DKJone
 Depiction: 不止于抢红包，功能丰富的微信插件
 Name: dkWechatHelper
 
+Package: com.dkjone.wecahtHelper
+Version: 1.0.7
+Architecture: iphoneos-arm
+Depends: firmware (>= 5.0), mobilesubstrate
+Filename: ./debs/com.dkjone.wecahtHelper_1.0.7_iphoneos-arm.deb
+Size: 18408238
+MD5sum: d0b3371f1731e6390ca4d3b579951afc
+SHA1: e12a5ea3b0fcd249ffe547bb17b4bc0485f8aee2
+SHA256: b9de46985b8030775af136fa4043c1c7bc8bb4c20b807f64cb2a29f39ef86e06
+Section: System
+Priority: optional
+Homepage: https://github.com/DKJone/DKWechatHelper
+Description: 不止于抢红包，功能丰富的微信插件
+Author: DKJone
+Depiction: 不止于抢红包，功能丰富的微信插件
+Name: dkWechatHelper
+
