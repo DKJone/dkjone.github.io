@@ -83,3 +83,36 @@ Author: DKJone
 Depiction: 不止于抢红包，功能丰富的微信插件
 Name: dkWechatHelper
 
+Package: com.dkjone.wecahtHelper
+Version: 1.0.9
+Architecture: iphoneos-arm
+Depends: firmware (>= 5.0), mobilesubstrate
+Filename: ./debs/com.dkjone.wecahtHelper_1.0.9_iphoneos-arm.deb
+Size: 258692
+MD5sum: 50065c1b4a58be2f86ce795aee5389ca
+SHA1: 68e27b9de26041018ac311593d619ab1eb506bc6
+SHA256: 620a8e0d2bc1195b7833fefb190683aefe95693b998eaf1fcc27b7b587a75e3e
+Section: System
+Priority: optional
+Homepage: https://github.com/DKJone/DKWechatHelper
+Description: 不止于抢红包，功能丰富的微信插件
+Author: DKJone
+Depiction: 不止于抢红包，功能丰富的微信插件
+Name: dkWechatHelper
+
+Package: com.rainyx.rxmemscan
+Version: 0.0.1-1+debug
+Architecture: iphoneos-arm
+Maintainer: rainyx
+Installed-Size: 1272
+Filename: ./debs/com.rainyx.rxmemscan_0.0.1-1+debug_iphoneos-arm.deb
+Size: 275862
+MD5sum: c0c9b1aeb789660443ca91d1c05da11a
+SHA1: bc1eb66003298bfb84d3aa05b742a60570d3b046
+SHA256: e1b00ee3ac40244284d3bbee218a095dd99203e51417d4a4c59ea007fc17ff4c
+Section: System
+Description: An awesome tool of some sort!!
+Tag: role::hacker
+Author: rainyx
+Name: rxmemscan
+
