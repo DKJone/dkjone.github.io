@@ -1,17 +1,17 @@
-I"c:<h1 id="xcode常见错误处理">xcode常见错误处理</h1>
+I"�9<h1 id="xcode常见错误处理">xcode常见错误处理</h1>
 <p>更加详细的内容会同步更新在GitHub项目<a href="https://github.com/DKJone/ios-Tips">ios-Tips</a>中</p>
 
 <h1 id="xcode-在ocswift混编时报错错误内容">Xcode 在OC、swift混编时报错错误内容</h1>
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>missing required module 'CommonCrypto'
 </code></pre></div></div>
 <h4 id="出错原因">出错原因：</h4>
-<p><code class="language-plaintext highlighter-rouge">
+<p>`
 由于苹果的C语言库在swift中没有对应的framework，所以OC框架在使用c语言库后作为外部框架导入后找不到原c语言框架
-</code></p>
+`</p>
 <h4 id="解决方法">解决方法</h4>
-<p><code class="language-plaintext highlighter-rouge">
+<p>`
 新建对应的虚拟Framework（在此使用脚本自动生成模块并映射正确的Xcode/SDK路径），然后加入到项目依赖中，护体方法如下
-</code></p>
+`</p>
 <ol>
   <li>选择xcode工程文件</li>
   <li>选择<code class="language-plaintext highlighter-rouge">info</code>选项</li>
