@@ -1,3 +1,17 @@
+Package: com.dkjone.dkVideoPlayer
+Version: 0.1.0-1
+Architecture: iphoneos-arm
+Depends: firmware (>= 5.0), mobilesubstrate
+Filename: ./debs/com.dkjone.dkVideoPlayer_0.1.0-1_iphoneos-arm.deb
+Size: 112906
+MD5sum: c96b52e835d2e8e821c273c76d0e2cae
+SHA1: 44b649de013fa6983693507b810b57674fbe9e6a
+SHA256: ea34fd7bb3967b2bef55c8953353a08e20712c4cfa45f035e96e405eda65abc3
+Section: System
+Priority: optional
+Author: DKJone
+Name: dkVideoPlayer
+
 Package: com.dkjone.wecahtHelper
 Version: 1.0.4
 Architecture: iphoneos-arm
