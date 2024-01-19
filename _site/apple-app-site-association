@@ -5,6 +5,10 @@
             {
                 "appID": "NL54V6A3P5.com.sinoroad.szwhExpressway",
                 "paths": [ "/app/*", ]
+            },
+            {
+                "appID": "NL54V6A3P5.com.sinoroad.pm",
+                "paths": [ "/pm/*", ]
             }
         ]
     }
