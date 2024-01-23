@@ -43,4 +43,8 @@
 <url>
 <loc>http://0.0.0.0:4000/</loc>
 </url>
+<url>
+<loc>http://0.0.0.0:4000/pm/</loc>
+<lastmod>2024-01-23T15:46:57+08:00</lastmod>
+</url>
 </urlset>
